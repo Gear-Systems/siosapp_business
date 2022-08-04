@@ -51,13 +51,13 @@
       </div>
       <div class="mt-2 flex flex-col">
         <div class="mb-1 flex justify-between">
-          <span class="text-sm text-black dark:text-white">Eficiencia</span>
-          <span class="text-sm text-black dark:text-white">{{ efectividad.total }}%</span>
+          <span class="text-sm text-black dark:text-white">Efectividad</span>
+          <span class="text-sm text-black dark:text-white">{{ efectividad.total ? efectividad.total : 100 }}%</span>
         </div>
         <div class="h-2 w-full rounded-full bg-[#E9F0FC] dark:bg-gray-700">
           <div
             class="h-2 rounded-full bg-[#143D89]"
-            :style="`width: ${efectividad.total}%`"
+            :style="`width: ${efectividad.total ? efectividad.total : 100}%`"
           ></div>
         </div>
       </div>
