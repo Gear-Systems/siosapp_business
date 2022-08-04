@@ -24,7 +24,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Bruta</div>
               <div class="text-base font-semibold">
-                {{ props.data.value.rentabilidad.bruta }}%
+                {{ cambioRentabilidad.bruta ? cambioRentabilidad.bruta : props.data.value.rentabilidad.bruta }}%
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Neta</div>
               <div class="text-base font-semibold">
-                {{ props.data.value.rentabilidad.neta }}%
+                {{ cambioRentabilidad.neta ? cambioRentabilidad.neta : props.data.value.rentabilidad.neta }}%
               </div>
             </div>
           </div>
@@ -65,5 +65,29 @@
 
 <script setup>
 import { ref } from "vue";
+import { getDatabase, ref as refDB, get, child } from 'firebase/database';
 const props = defineProps(["data"]);
+const cambioRentabilidad = ref({
+  bruta: null,
+  neta: null,
+})
+const db = getDatabase();
+
+get(child(refDB(db), `/avanceProyectos/${props.data.key}`)).then((snapshot) =>{
+  // Valida si existe un avance de proyecto
+  if(snapshot.exists){
+    // Valida si existe cambios en las rentabilidades
+    if(snapshot.hasChild("rentabilidad")) {
+      // Valida si el cambio es en la rentabilidad bruta
+      if(snapshot.hasChild("rentabilidad/bruta")) {
+        cambioRentabilidad.value.bruta = snapshot.val().rentabilidad.bruta;
+      }
+      // Valida si el cambio es en la rentabilidad neta
+      if(snapshot.hasChild("rentabilidad/neta")) {
+        cambioRentabilidad.value.neta = snapshot.val().rentabilidad.neta;
+      }
+    }
+  }
+})
+
 </script>

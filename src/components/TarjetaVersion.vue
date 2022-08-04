@@ -35,7 +35,10 @@ const notasVersion = [
       "La sección 'Todos los proyectos' será lanzada en la versión 1.1.0 (22/08/2022)",
   },
   {
-    descripcion: "Se corrigieron bugs al entrar a la aplicación."
+    descripcion: "Se corrigieron las rentabilidades mostradas en las tarjetas de proyectos en proceso y finalizados."
+  },
+  {
+    descripcion: "Se corrigió la efectividad mostrada en la tarjeta de proyectos finalizados."
   },
 ];
 </script>

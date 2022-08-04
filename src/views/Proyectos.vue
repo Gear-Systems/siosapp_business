@@ -51,7 +51,7 @@
           >
         </TabList>
         <TabPanels>
-          <TabPanel>
+          <TabPanel v-for="item in unidadesNegocio">
             <div class="mt-4">
               <proyectos-pestanas-todos
                 :enProceso="proyectosEnProceso"
@@ -59,35 +59,6 @@
               />
             </div>
           </TabPanel>
-          <TabPanel
-            ><div class="mt-4">
-              <proyectos-pestanas-todos
-                :enProceso="proyectosEnProceso"
-                :finalizados="proyectosFinalizados"
-              />
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div class="mt-4">
-              <proyectos-pestanas-todos
-                :enProceso="proyectosEnProceso"
-                :finalizados="proyectosFinalizados"
-              /></div
-          ></TabPanel>
-          <TabPanel>
-            <div class="mt-4">
-              <proyectos-pestanas-todos
-                :enProceso="proyectosEnProceso"
-                :finalizados="proyectosFinalizados"
-              /></div
-          ></TabPanel>
-          <TabPanel>
-            <div class="mt-4">
-              <proyectos-pestanas-todos
-                :enProceso="proyectosEnProceso"
-                :finalizados="proyectosFinalizados"
-              /></div
-          ></TabPanel>
         </TabPanels>
       </TabGroup>
     </div>
