@@ -120,7 +120,7 @@
             <div class="flex flex-col">
               <div>Bruta Inicial</div>
               <div class="text-lg font-bold">
-                {{ data.val().rentabilidad.bruta + "%" }}
+                {{ data.val().rentabilidad.bruta + " %" }}
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@
             <div class="flex flex-col">
               <div>Neta Inicial</div>
               <div class="text-lg font-bold">
-                {{ data.val().rentabilidad.neta + "%" }}
+                {{ data.val().rentabilidad.neta + " %" }}
               </div>
             </div>
           </div>
