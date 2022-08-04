@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col space-y-4 bg-gray-50 w-fit p-2 rounded-md">
+  <div class="flex w-[70%] flex-col space-y-4 rounded-md bg-gray-50 p-2">
     <div class="flex text-2xl font-semibold">
       NOTAS DE LA VERSION {{ version }}
     </div>
@@ -15,20 +15,27 @@
 
 <script setup>
 import { ref } from "vue";
-import { version } from '../../package.json';
+import { version } from "../../package.json";
 
-const notasVersion = ref([
+const notasVersion = [
   {
     descripcion:
-      "Este es un lanzamiento BETA, toda la información cargada será eliminada el día del lanzamiento oficial.",
-  },
-  {
-    descripcion:
-      "Si tienen problema o sugerencias con la aplicación enviar correo a: desarrollo@iosgs.com",
+      "Si tienen problema o sugerencias con la aplicación enviar correo a: soporte_business@iosgs.com",
   },
   {
     descripcion:
       "La aplicación estará en constantes cambios de interfaz (diseño)",
   },
-]);
+  {
+    descripcion:
+      "En esta versión no se puede cambiar el ingreso final en las unidades de negocio que no sean de Poliza. Este problema se solucionará con la versión 1.1.0 con fecha de lanzamiento el dia 22/08/2022",
+  },
+  {
+    descripcion:
+      "La sección 'Todos los proyectos' será lanzada en la versión 1.1.0 (22/08/2022)",
+  },
+  {
+    descripcion: "Se corrigieron bugs al entrar a la aplicación."
+  },
+];
 </script>

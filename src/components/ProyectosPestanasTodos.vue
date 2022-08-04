@@ -10,23 +10,14 @@
         </div>
       </div>
       <!-- En proceso -->
-      <div class="mt-2 flex flex h-full min-h-[200px] w-full">
-        <Carousel
-          :settings="settings"
-          :breakpoints="breakpoints"
-          class="h-auto w-full"
+      <div class="mt-2 flex h-full min-h-[200px] w-full">
+        <div
+          class="flex w-[260px] py-2 px-4"
+          v-for="(item, index) in props.enProceso"
+          :key="index"
         >
-          <Slide
-            class="flex w-[260px] py-2 px-4"
-            v-for="(item, index) in props.enProceso"
-            :key="index"
-          >
-            <proyecto-tarjeta-en-proceso :data="item" />
-          </Slide>
-          <template #addons>
-            <Navigation class="bg-red-200" />
-          </template>
-        </Carousel>
+          <proyecto-tarjeta-en-proceso :data="item" />
+        </div>
       </div>
     </div>
     <div class="flex h-full flex-col">

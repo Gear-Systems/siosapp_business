@@ -33,7 +33,7 @@ module.exports = {
         'right': '0 6px 15px -2px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
       },
       backgroundImage: {
-        'fondo-tarjeta1': "url('img/tarjeta_fondo_1.svg')",
+        'fondo-tarjeta1': "url('/img/tarjeta_fondo_1.svg')",
       },
     },
   },

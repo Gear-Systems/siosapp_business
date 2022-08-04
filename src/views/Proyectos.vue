@@ -13,23 +13,14 @@
         </div>
         <!-- pendientes -->
         <div
-          class="flex h-full w-[60%] cursor-pointer select-none snap-x flex-row"
+          class="flex h-full w-[60%] cursor-pointer select-none snap-x flex-row overflow-scroll"
         >
-          <Carousel
-            :settings="settings"
-            :breakpoints="breakpoints"
-            class="h-full w-full"
-          >
-            <Slide
-              class="flex h-full w-full min-w-[40%] py-2 px-4"
+            <div
+              class="flex h-full w-[40%] min-w-[40%] py-2 px-4"
               v-for="(item, index) in proyectosPendientes"
               :key="index"
               ><proyectos-tarjeta-pendiente-vue :data="item"
-            /></Slide>
-            <template #addons>
-              <Navigation class="bg-red-200" />
-            </template>
-          </Carousel>
+            /></div>
         </div>
         <div class="flex h-full w-[23%] select-none py-2 px-4">
           <tarjeta-todos-proyectos />

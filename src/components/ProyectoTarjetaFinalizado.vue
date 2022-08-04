@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-full w-full cursor-pointer flex-col space-y-2 rounded-lg bg-[url('img/tarjeta_fondo_finalizado.svg')] bg-auto bg-right-top bg-no-repeat p-6 shadow-md"
+    class="flex h-full w-full cursor-pointer flex-col space-y-2 rounded-lg bg-[url('/img/tarjeta_fondo_finalizado.svg')] bg-auto bg-right-top bg-no-repeat p-6 shadow-md"
     @click="$router.push(`/proyectos/finalizados/${props.data.key}`)"
   >
     <div class="flex h-full w-full flex-col">

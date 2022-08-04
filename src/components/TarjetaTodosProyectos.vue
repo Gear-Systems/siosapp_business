@@ -1,5 +1,5 @@
 <template>
-<div class="space-x-none flex flex-col h-full w-full min-w-[25%] snap-start rounded-lg bg-[url('img/tarjeta_fondo_1.svg')] bg-white bg-cover bg-center bg-no-repeat bg-local">
+<div class="space-x-none flex flex-col h-full w-full min-w-[25%] snap-start rounded-lg bg-[url('/img/tarjeta_fondo_1.svg')] bg-white bg-cover bg-center bg-no-repeat bg-local">
 <div class="flex justify-center items-center mt-4 text-[22.5px] font-bold w-full h-[50%]">
     Ver <br/> todos <br/> los proyectos
 </div>
