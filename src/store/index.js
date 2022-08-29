@@ -31,7 +31,7 @@ const proyectosControl = {
     volumetrias: [],
     tipoVolumetrias: [],
     unidadVolumetrias: [],
-    controlVolumetria: 1
+    controlVolumetria: 1,
   }),
   mutations: {
     openModalNuevoProyecto(state) {
@@ -77,14 +77,16 @@ const proyectosControl = {
       state.isOpenModalEliminarProyecto = false;
     },
     unidadNegocioPoliza(state, unidad) {
-        if (unidad.name === "Poliza") state.controlPoliza = false;
-        else state.controlPoliza = true;
+      if (unidad.name === "Poliza") state.controlPoliza = false;
+      else state.controlPoliza = true;
     },
     ingresoFinalSave(state, ingreso) {
-      state.ingresoFinal = (ingreso.toLocaleString("en", {
-        style: "currency",
-        currency: "MXN"
-      })).replace('MX', '');
+      state.ingresoFinal = ingreso
+        .toLocaleString("en", {
+          style: "currency",
+          currency: "MXN",
+        })
+        .replace("MX", "");
     },
     queryResult(state, data) {
       state.proyectoQuery = data;
@@ -92,9 +94,18 @@ const proyectosControl = {
   },
 };
 
+const mobileControl = {
+  state: () => ({
+    mobile: null,
+    mobileNav: null,
+    windowsWidth: null,
+  }),
+};
+
 export const store = createStore({
   modules: {
     a: navbarControl,
     b: proyectosControl,
+    c: mobileControl
   },
 });

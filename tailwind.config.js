@@ -35,7 +35,7 @@ module.exports = {
       backgroundImage: {
         'fondo-tarjeta1': "url('/img/tarjeta_fondo_1.svg')",
       },
-    },
+    }
   },
   plugins: [
     require('@tailwindcss/forms'),
