@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "firebase": "^9.8.1",
+    "firebase": "^9.11.0",
     "flowbite": "^1.4.7",
     "vue": "^3.2.33",
     "vue-router": "^4.0.15",
