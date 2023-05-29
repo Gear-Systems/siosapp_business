@@ -1,10 +1,10 @@
 <template>
   <div
-    class="relative flex h-full w-full min-w-[40%] max-w-[100%] flex-col justify-around space-y-2 overflow-visible rounded-lg bg-white px-4"
+    class="relative flex h-full w-full max-w-[100%] flex-col justify-around space-y-2 overflow-visible rounded-lg bg-white px lg:px-4 xl:px-4 md:px-4"
   >
     <!-- Nombre del proyecto -->
     <div class="relative flex w-full flex-col">
-      <div class="relative flex h-max h-[45%] w-full justify-end">
+      <div class="relative flex w-full justify-end">
         <Menu as="div" class="relative inline-block text-left">
           <div>
             <MenuButton
@@ -23,7 +23,7 @@
             leave-to-class="transform scale-95 opacity-0"
           >
             <MenuItems
-              class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="absolute -right-16 z-50 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <div class="px-1 py-1">
                 <MenuItem v-slot="{ active }">
@@ -44,8 +44,8 @@
                       aria-hidden="true"
                     >
                       <svg
-                        width="20"
-                        height="22"
+                        width="18"
+                        height="20"
                         viewBox="0 0 12 14"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -77,8 +77,8 @@
                       aria-hidden="true"
                     >
                       <svg
-                        width="20"
-                        height="20"
+                        width="18"
+                        height="18"
                         viewBox="0 0 12 12"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +110,8 @@
                       aria-hidden="true"
                     >
                       <svg
-                        width="20"
-                        height="22"
+                        width="18"
+                        height="20"
                         viewBox="0 0 12 14"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

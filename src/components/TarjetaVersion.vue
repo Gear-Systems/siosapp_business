@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-[70%] flex-col space-y-4 rounded-md bg-gray-50 p-2">
+  <div class="flex w-full xl:w-[70%] space-x-4 flex-col space-y-4 rounded-md bg-gray-50">
     <div class="flex text-2xl font-semibold">
       NOTAS DE LA VERSION {{ version }}
     </div>
