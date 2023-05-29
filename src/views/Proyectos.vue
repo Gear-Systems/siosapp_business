@@ -1,54 +1,68 @@
 <template>
-  <div class="flex h-full w-full flex-col space-y-14">
+  <div class="flex h-full w-full flex-col">
     <!-- Nuevos proyectos / pendientes -->
     <div
-      class="flex min-h-[50%] w-full flex-col rounded-3xl bg-[#E9F0FC] px-12 py-8"
+      class="flex min-h-[42%] w-full flex-col rounded-3xl bg-[#E9F0FC] px-4 py-8 md:min-h-[50%]"
     >
       <div class="flex h-full w-full space-x-4">
-        <div class="w-[15%] min-w-min break-words text-xl font-semibold">
-          Agregar nuevo proyecto
-        </div>
-        <div class="h-full w-[5%]">
-          <ProyectoNuevo />
+        <!-- Agregar nuevo proyecto (solo si el dispositivo es desktop o laptop) -->
+        <div
+          class="flex w-fit justify-center space-x-4 bg-red-200"
+          v-if="!$store.state.c.mobile"
+        >
+          <div
+            class="flex w-[15%] min-w-min items-start justify-center break-words text-xl font-semibold"
+          >
+            Agregar nuevo proyecto
+          </div>
+          <div class="h-full w-[10%]">
+            <ProyectoNuevo />
+          </div>
         </div>
         <!-- pendientes -->
         <div
-          class="flex h-full w-[60%] cursor-pointer select-none snap-x flex-row overflow-scroll"
+          class="flex h-full w-full cursor-pointer select-none flex-row overflow-scroll"
         >
-            <div
-              class="flex h-full w-[40%] min-w-[40%] py-2 px-4"
-              v-for="(item, index) in proyectosPendientes"
-              :key="index"
-              ><proyectos-tarjeta-pendiente-vue :data="item"
-            /></div>
+          <div
+            class="flex h-full w-[40%] min-w-[60%] py-2 px-4 md:min-w-[30%] lg:min-w-[40%] xl:min-w-[30%] xl:max-w-xs"
+            v-for="(item, index) in proyectosPendientes"
+            :key="index"
+          >
+            <component
+              :is="item.component ? item.component : ProyectosTarjetaPendiente"
+              :data="item"
+            ></component>
+          </div>
         </div>
-        <div class="flex h-full w-[23%] select-none py-2 px-4">
+        <!-- <div class="flex h-full w-fit min-w-[170px] select-none py-2 px-4">
           <tarjeta-todos-proyectos />
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- Fin nuevos proyectos / pendientes -->
     <!-- Pestañas -->
-    <div class="flex h-full w-full flex-col bg-white">
-      <div class="mb-6 text-xl font-semibold">Unidades de Negocio</div>
+    <div class="my-6 flex h-full w-full flex-col bg-white">
+      <div class="text-xl font-semibold">Unidades de Negocio</div>
       <TabGroup @change="cambioPestana">
         <TabList class="border-b-2">
-          <Tab
-            v-slot="{ selected }"
-            as="template"
-            v-for="item in unidadesNegocio"
-            :key="item"
-            ><button
-              class="select-none border-b-2 bg-white px-14 py-2"
-              :class="[
-                selected
-                  ? 'border-[#2166E5] font-semibold text-[#2166E5]'
-                  : 'border-none text-[#7C8495]',
-              ]"
+          <div class="flex overflow-scroll pt-4">
+            <Tab
+              v-slot="{ selected }"
+              as="template"
+              v-for="item in unidadesNegocio"
+              :key="item"
+              ><button
+                class="select-none border-b-2 bg-white px-14 py-2"
+                :class="[
+                  selected
+                    ? 'border-[#2166E5] font-semibold text-[#2166E5]'
+                    : 'border-none text-[#7C8495]',
+                ]"
+              >
+                {{ item.name }}
+              </button></Tab
             >
-              {{ item.name }}
-            </button></Tab
-          >
+          </div>
         </TabList>
         <TabPanels>
           <TabPanel v-for="item in unidadesNegocio">
@@ -67,11 +81,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, markRaw } from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import { useStore } from "vuex";
 import ProyectoNuevo from "@/components/ProyectosNuevo.vue";
-import ProyectosTarjetaPendienteVue from "@/components/ProyectosTarjetaPendiente.vue";
+import ProyectosTarjetaPendiente from "@/components/ProyectosTarjetaPendiente.vue";
 import ProyectosPestanas from "@/components/ProyectosPestanas.vue";
 import ProyectosPestanasTodos from "@/components/ProyectosPestanasTodos.vue";
 import ProyectoTarjetaEnProceso from "@/components/ProyectoTarjetaEnProceso.vue";
@@ -92,7 +106,12 @@ import { Carousel, Navigation, Slide } from "vue3-carousel";
 const database = getDatabase();
 const store = useStore();
 const proyectosRef = refDB(database, "proyectos");
-const proyectosPendientes = ref([]);
+const proyectosPendientes = ref([
+  {
+    title: "ver todos los proyectos",
+    component: markRaw(TarjetaTodosProyectos),
+  },
+]);
 const proyectosEnProceso = ref([]);
 const proyectosFinalizados = ref([]);
 const snapshotData = ref();
@@ -105,10 +124,6 @@ const unidadesNegocio = ref([
   { name: "Megacable", disabled: false },
   { name: "Ventas", disabled: false },
 ]);
-
-const drag = () => {
-  alert("Hola");
-};
 
 const listaProyectos = query(proyectosRef, orderByKey());
 
@@ -147,7 +162,7 @@ function cambioPestana(index) {
 get(listaProyectos).then((snapshot) => {
   snapshot.forEach((dataSnapshot) => {
     if (dataSnapshot.val().estado === "Pendiente de información") {
-      proyectosPendientes.value.push(dataSnapshot);
+      proyectosPendientes.value.unshift(dataSnapshot);
     }
   });
   // store.commit("queryResult", snapshot.val());
@@ -158,19 +173,6 @@ get(listaProyectos).then((snapshot) => {
 const settings = {
   itemsToShow: 1,
   snapAlign: "center",
-};
-
-const breakpoints = {
-  // 700px and up
-  700: {
-    itemsToShow: 4,
-    snapAlign: "center",
-  },
-  // 1024 and up
-  1024: {
-    itemsToShow: 2.5,
-    snapAlign: "start",
-  },
 };
 </script>
 

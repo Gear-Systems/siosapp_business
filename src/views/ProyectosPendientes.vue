@@ -1,7 +1,7 @@
 <template>
-  <div class="flex h-auto w-full select-none space-x-[4%]">
+  <div class="flex flex-col lg:pl-4 xl:pl-4 lg:flex-row xl:flex-row h-auto w-full select-none space-y-4 lg:space-y-0 xl:space-y-0 lg:space-x-[4%] xl:space-x-[4%]">
     <div
-      class="flex w-[32%] flex-col rounded-2xl border bg-white p-8 shadow-md"
+      class="flex w-full md:w-[50%] lg:w-[32%] xl:w-[32%] flex-col rounded-2xl border bg-white p-8 shadow-md"
     >
       <!-- Icono / Nombre proyecto / Funciones -->
       <div class="flex w-full flex-col items-center justify-center space-y-6">
@@ -115,7 +115,7 @@
         </div>
       </div>
     </div>
-    <div class="flex w-[32%] flex-col space-y-[4%]">
+    <div class="flex w-full md:w-[50%] lg:w-[32%] xl:w-[32%] flex-col space-y-[4%]">
       <!-- Costo Interno -->
       <div
         class="flex h-full min-h-[32%] flex-col space-y-6 rounded-2xl border bg-white p-8 shadow-md"
@@ -152,7 +152,7 @@
               min="0"
             />
           </div>
-          <div class="flex w-[35%] flex-col">
+          <div class="flex w-[45%] flex-col">
             <label for="costoInternoMaterial" class="text-[#7C8495]"
               >Mano de obra</label
             >
@@ -213,7 +213,7 @@
               min="0"
             />
           </div>
-          <div class="flex w-[35%] flex-col">
+          <div class="flex w-[45%] flex-col">
             <label for="costoInternoMaterial" class="text-[#7C8495]"
               >Mano de obra</label
             >
@@ -319,7 +319,7 @@
         </div>
       </div>
     </div>
-    <div class="flex w-[32%] flex-col items-center space-y-[4%] px-8">
+    <div class="flex w-full md:w-[50%] lg:w-[32%] xl:w-[32%] flex-col items-center space-y-[4%] px-8">
       <div
         class="flex h-full w-full flex-col items-center rounded-md bg-[#E9F0FC] p-8"
       >
@@ -372,7 +372,7 @@
         </div>
       </div>
       <div
-        class="flex h-full w-full flex-col items-center justify-center space-y-20"
+        class="flex h-full w-full flex-col items-center justify-center space-y-10 lg:space-y-20 xl:space-y-20 pt-5"
       >
         <button
           @click="$router.push('/proyectos')"

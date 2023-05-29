@@ -4,7 +4,7 @@
     <div class="w-full h-[13%]">
       <Navbar />
     </div>
-    <div class="w-full h-full py-8 mb-12 px-4 overflow-y-auto bg-white">
+    <div class="w-full h-full pb-8 pt-4 overflow-y-auto bg-white">
       <router-view></router-view>
       <ModalNuevoProyecto />
     </div>
