@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full items-center justify-center sm:space-x-12 md:space-x-12">
+  <div class="flex h-full w-full sm:space-x-12 md:space-x-12">
     <div class="z-40 flex h-full items-end justify-end">
       <!-- icono menu -->
       <div

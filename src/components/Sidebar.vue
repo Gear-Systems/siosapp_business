@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full rounded-r-3xl border bg-white transition-all duration-300 ease-in"
+    class="h-full border bg-white transition-all duration-300 ease-in"
     :class="[$store.state.a.open ? 'z-40 w-[18%] shadow-right' : 'w-[0%]']"
   >
     <div
@@ -20,7 +20,7 @@
         <!-- Rol y nombre de usuario -->
         <div class="flex flex-col">
           <div class="text-xs">Departamento</div>
-          <div class="text-lg font-semibold">Usuario</div>
+          <div class="text-lg font-semibold">{{ auth.currentUser?.displayName }}</div>
         </div>
       </div>
       <!-- Fin bienvenida de usuario -->
@@ -34,12 +34,12 @@
       <ul class="mt-8 flex w-full flex-col space-y-4 px-8 font-semibold">
         <li
           class="flex w-full cursor-pointer space-x-4 rounded-xl py-2 px-4 transition-all duration-200"
-          :class="[$route.path == '/' ? 'bg-blue-siosapp/10' : '']"
-          @click="$router.push('/')"
+          :class="[$route.path == '/dashboard' ? 'bg-blue-siosapp/10' : '']"
+          @click="$router.push('/dashboard')"
         >
           <div
             class="flex h-auto w-[20%] items-center justify-center"
-            :class="[$route.path == '/' ? 'text-blue-siosapp' : 'text-black']"
+            :class="[$route.path == '/dashboard' ? 'text-blue-siosapp' : 'text-black']"
           >
             <svg
               width="22"
@@ -56,7 +56,7 @@
             </svg>
           </div>
           <div
-            :class="[$route.path == '/' ? 'text-blue-siosapp' : 'text-black']"
+            :class="[$route.path == '/dashboard' ? 'text-blue-siosapp' : 'text-black']"
           >
             Dashboard
           </div>
@@ -103,6 +103,7 @@
 <script setup>
 import { ref } from "vue";
 import { version } from "../../package.json";
+import { auth } from "../firebase"
 
 const versionAPP = ref(version);
 </script>

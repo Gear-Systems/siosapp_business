@@ -2,12 +2,12 @@
   <div class="flex h-full w-full flex-col">
     <!-- Nuevos proyectos / pendientes -->
     <div
-      class="flex min-h-[42%] w-full flex-col rounded-3xl bg-[#E9F0FC] px-4 py-8 md:min-h-[50%]"
+      class="flex min-h-[42%] w-full flex-col rounded-xl bg-[#E9F0FC] px-4 py-8 md:min-h-[32%]"
     >
       <div class="flex h-full w-full space-x-4">
         <!-- Agregar nuevo proyecto (solo si el dispositivo es desktop o laptop) -->
         <div
-          class="flex w-fit justify-center space-x-4 bg-red-200"
+          class="flex w-fit justify-center space-x-4 bg-red-200 rounded-xl"
           v-if="!$store.state.c.mobile"
         >
           <div
@@ -21,7 +21,7 @@
         </div>
         <!-- pendientes -->
         <div
-          class="flex h-full w-full cursor-pointer select-none flex-row overflow-scroll"
+          class="flex h-full w-full cursor-pointer select-none flex-row overflow-scroll custom-scrollbar"
         >
           <div
             class="flex h-full w-[40%] min-w-[60%] py-2 px-4 md:min-w-[30%] lg:min-w-[40%] xl:min-w-[30%] xl:max-w-xs"
@@ -81,31 +81,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, markRaw } from "vue";
+import { ref, markRaw } from "vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import { useStore } from "vuex";
 import ProyectoNuevo from "@/components/ProyectosNuevo.vue";
 import ProyectosTarjetaPendiente from "@/components/ProyectosTarjetaPendiente.vue";
-import ProyectosPestanas from "@/components/ProyectosPestanas.vue";
 import ProyectosPestanasTodos from "@/components/ProyectosPestanasTodos.vue";
-import ProyectoTarjetaEnProceso from "@/components/ProyectoTarjetaEnProceso.vue";
-import {
-  getDatabase,
-  ref as refDB,
-  onValue,
-  orderByChild,
-  query,
-  limitToLast,
-  get,
-  orderByKey,
-} from "@firebase/database";
-import { async } from "@firebase/util";
 import TarjetaTodosProyectos from "@/components/TarjetaTodosProyectos.vue";
-import { Carousel, Navigation, Slide } from "vue3-carousel";
 
-const database = getDatabase();
-const store = useStore();
-const proyectosRef = refDB(database, "proyectos");
 const proyectosPendientes = ref([
   {
     title: "ver todos los proyectos",
@@ -124,8 +106,6 @@ const unidadesNegocio = ref([
   { name: "Megacable", disabled: false },
   { name: "Ventas", disabled: false },
 ]);
-
-const listaProyectos = query(proyectosRef, orderByKey());
 
 function cambioPestana(index) {
   proyectosEnProceso.value = [];
@@ -159,17 +139,6 @@ function cambioPestana(index) {
   });
 }
 
-get(listaProyectos).then((snapshot) => {
-  snapshot.forEach((dataSnapshot) => {
-    if (dataSnapshot.val().estado === "Pendiente de información") {
-      proyectosPendientes.value.unshift(dataSnapshot);
-    }
-  });
-  // store.commit("queryResult", snapshot.val());
-  snapshotData.value = snapshot.val();
-  cambioPestana(0);
-});
-
 const settings = {
   itemsToShow: 1,
   snapAlign: "center",
@@ -177,33 +146,12 @@ const settings = {
 </script>
 
 <style>
-.scroll-barra::-webkit-scrollbar {
-  height: 8px;
-}
-/* Estilos barra (thumb) de scroll */
-.scroll-barra::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
+.custom-scrollbar::-webkit-scrollbar {
+  -webkit-appearance: none;
 }
 
-.scroll-barra::-webkit-scrollbar-thumb:active {
-  background-color: #999999;
-}
-
-.scroll-barra::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilos track de scroll */
-.scroll-barra::-webkit-scrollbar-track {
-  background: #e1e1e1;
-  border-radius: 4px;
-}
-
-.scroll-barra::-webkit-scrollbar-track:hover,
-.scroll-barra::-webkit-scrollbar-track:active {
-  background: #d4d4d4;
+.custom-scrollbar::-webkit-scrollbar:vertical {
+    width:10px;
 }
 
 .carousel__viewport {
