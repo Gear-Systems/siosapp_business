@@ -10,9 +10,9 @@
         </div>
       </div>
       <!-- En proceso -->
-      <div class="mt-2 flex h-full min-h-[200px] w-full">
+      <div class="flex h-full w-full cursor-pointer select-none flex-row overflow-y-auto">
         <div
-          class="flex w-[260px] py-2 px-4"
+          class="flex h-full min-w-[250px] max-w-[250px] ml-2 py-2 px-4"
           v-for="(item, index) in props.enProceso"
           :key="index"
         >
@@ -28,14 +28,14 @@
           <div class="flex h-4 w-4 rounded-full bg-[#143D89]"></div>
           <div>Finalizados</div>
         </div>
-        <div class="mr-12 flex items-center justify-center">
+        <div class="flex items-center justify-center text-sm">
           Izquierda | Derecha
         </div>
       </div>
       <!-- Finalizados -->
-      <div class="flex h-full min-h-[200px] w-full flex-row overflow-auto">
+      <div class="flex h-full w-full cursor-pointer select-none flex-row overflow-y-auto">
         <div
-          class="flex h-full w-[260px] overflow-hidden py-2 px-4"
+          class="flex h-full min-w-[250px] max-w-[250px] ml-2 py-2 px-4"
           v-for="(item, index) in props.finalizados"
           :key="index"
         >

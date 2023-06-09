@@ -1,6 +1,6 @@
 <template>
-  <div class="flex  w-full">
-    <div class="flex flex-col w-[70%] h-fit">
+  <div class="flex flex-col lg:flex-row md:flex-row w-full">
+    <div class="flex flex-col w-full lg:w-[70%] md:w-[70%] h-fit">
       <!-- Avance -->
       <div class="flex h-full flex-col w-fit">
         <!-- Tiempo -->
@@ -8,12 +8,12 @@
           <div class="flex w-full flex-col">
             <!-- Componente -->
             <div
-              class="mb-12 flex w-full justify-between"
+              class="mb-12 flex flex-col lg:flex-row md:flex-row space-y-6 lg:space-y-0 md:space-y-0 w-full justify-between"
               v-if="props.data.val().tiempo"
             >
-              <div class="flex w-[70%] flex-col">
-                <div class="flex w-full justify-between py-1">
-                  <div class="flex h-[60%] w-[28%] flex-col p-2">
+              <div class="flex w-full lg:w-[70%] md:w-[70%] flex-col">
+                <div class="flex flex-col lg:flex-row md:flex-row w-full justify-between py-1">
+                  <div class="flex h-[60%] w-full lg:w-[28%] md:w-[28%] flex-col p-2">
                     <label
                       class="flex w-full justify-start text-sm text-[#7C8495]"
                       for="iTotal"
@@ -35,7 +35,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex h-[60%] w-[28%] flex-col p-2">
+                  <div class="flex h-[60%] w-full lg:w-[28%] md:w-[28%] flex-col p-2">
                     <label
                       class="flex w-full justify-start text-sm text-[#7C8495]"
                       for="tiempoActual"
@@ -58,7 +58,7 @@
                   </div>
 
                   <div
-                    class="flex w-[28%] flex-col rounded-md bg-[#E9F0FC] p-2"
+                    class="flex w-full lg:w-[28%] md:w-[28%] flex-col rounded-md bg-[#E9F0FC] p-2"
                   >
                     <label
                       class="flex w-full justify-start text-sm font-bold text-[#1A52B7]"
@@ -109,13 +109,13 @@
             <!-- Fin componente 1-->
             <!-- Componente 2 -->
             <div
-              class="mb-12 flex w-full justify-between"
+              class="mb-12 flex flex-col lg:flex-row md:flex-row w-full justify-between space-y-6 lg:space-y-0 md:space-y-0"
               v-for="(volumen, key, index) in props.data.val().volumetrias"
               :key="index"
             >
-              <div class="flex w-[70%] flex-col">
-                <div class="flex w-full justify-between py-1">
-                  <div class="flex h-[60%] w-[28%] flex-col p-2">
+              <div class="flex w-full lg:w-[70%] md:w-[70%] flex-col">
+                <div class="flex flex-col lg:flex-row md:flex-row w-full justify-between py-1">
+                  <div class="flex h-[60%] w-full lg:w-[28%] md:w-[28%] flex-col p-2">
                     <label
                       class="flex w-full justify-start text-sm text-texto-gris"
                       :for="`nuevoAvance[${index}]`"
@@ -135,7 +135,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex h-[60%] w-[25.5%] flex-col p-2">
+                  <div class="flex h-[60%] w-full lg:w-[28%] md:w-[28%] flex-col p-2">
                     <label
                       class="flex w-full justify-start text-sm text-texto-gris"
                       :for="`volumetriaActual[${index}]`"
@@ -158,7 +158,7 @@
                   </div>
 
                   <div
-                    class="flex w-[25.5%] flex-col rounded-md bg-[#E9F0FC] p-2"
+                    class="flex w-full lg:w-[28%] md:w-[28%] flex-col rounded-md bg-[#E9F0FC] p-2"
                   >
                     <label
                       class="flex w-full justify-start text-sm font-bold text-[#1A52B7]"
@@ -212,7 +212,7 @@
       </div>
     </div>
     <div
-      class="flex h-full flex-col items-center justify-center font-semibold w-[30%]"
+      class="flex h-full flex-col items-center justify-center font-semibold w-full lg:w-[30%] md:w-[30%]"
     >
       <div class="flex w-full items-center justify-center space-x-4">
         <div

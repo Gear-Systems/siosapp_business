@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-full flex-col">
+  <div class="flex h-full w-full flex-col px-3">
     <!-- Nuevos proyectos / pendientes -->
     <div
       class="flex min-h-[42%] w-full flex-col rounded-3xl bg-[#E9F0FC] px-4 py-8 md:min-h-[50%]"
@@ -7,7 +7,7 @@
       <div class="flex h-full w-full space-x-4">
         <!-- Agregar nuevo proyecto (solo si el dispositivo es desktop o laptop) -->
         <div
-          class="flex w-fit justify-center space-x-4 bg-red-200"
+          class="flex w-fit justify-center space-x-4"
           v-if="!$store.state.c.mobile"
         >
           <div

@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="z-50 flex h-full -mt-4 w-full items-end justify-end">
+      <div class="z-50 flex h-full -mt-4 w-full items-end justify-end ml-4 lg:ml-0 md:ml-0">
         <div
           class="flex h-8 w-8 rotate-180 items-center justify-center rounded-full bg-[#2166E5] text-white"
         >

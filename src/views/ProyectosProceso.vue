@@ -1,6 +1,8 @@
 <template>
   <div class="flex h-full w-full flex-col space-y-6 px-6 py-6">
-    <div class="mb-10 flex h-[20%] w-full">
+    <div
+      class="mb-10 flex w-full flex-col items-center md:h-[20%] md:flex-row lg:h-[20%] lg:flex-row lg:items-start"
+    >
       <!-- Icono -->
       <div class="flex h-full w-fit items-center justify-center">
         <div
@@ -23,7 +25,9 @@
         </div>
       </div>
       <!-- Tarjeta de proyecto -->
-      <div class="flex w-[60%] flex-col items-center">
+      <div
+        class="mt-6 flex w-full flex-col items-start md:mt-0 md:w-[60%] lg:mt-0 lg:w-[60%] lg:items-center"
+      >
         <div class="flex w-[60%] flex-col space-y-4">
           <div class="flex justify-start text-xl font-semibold">
             {{ data.val().nombre }}
@@ -47,41 +51,15 @@
         </div>
       </div>
       <!-- Fin tarjeta de proyecto -->
-      <div class="flex w-[60%] items-center space-x-[10%]">
+      <div
+        class="flex w-full mt-6 lg:mt-0 md:mt-0 flex-col items-start md:w-[60%] md:flex-row md:items-center lg:w-[60%] lg:flex-row lg:items-center lg:space-x-[10%]"
+      >
         <!-- Ingreso total -->
-        <div class="flex w-[40%] flex-col space-y-4">
-          <div class="flex w-full justify-center">Ingresos</div>
+        <div class="flex w-full justify-center">
           <div
-            class="group relative mb-6 w-full rounded-lg border-2 px-4 pt-4 drop-shadow-sm"
+            class="flex w-[60%] flex-col justify-center space-y-4 md:w-[40%] lg:w-[60%]"
           >
-            <input
-              type="text"
-              name="ingreso_inicial"
-              class="peer block w-full border-none bg-transparent py-2.5 px-0 text-lg font-bold text-[#2166E5]"
-              placeholder=" "
-              :value="iTotal.replace('MX', '')"
-              disabled
-            />
-            <label
-              for="ingreso_inicial"
-              class="absolute top-7 origin-[0] -translate-y-6 scale-75 transform text-base font-medium text-black duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
-            >
-              {{
-                $store.state.b.ingresoFinal == "$0.00" ? "Actual" : "Inicial"
-              }}</label
-            >
-          </div>
-          <TransitionRoot
-            appear
-            :show="$store.state.b.ingresoFinal != '$0.00'"
-            enter="transition-opacity duration-500"
-            enter-from="opacity-0"
-            enter-to="opacity-100"
-            leave="transition-opacity duration-500"
-            leave-from="opacity-100"
-            leave-to="opacity-0"
-            :class="$store.state.b.ingresoFinal != '$0.00' ? '' : 'absolute'"
-          >
+            <div class="flex w-full justify-center">Ingresos</div>
             <div
               class="group relative mb-6 w-full rounded-lg border-2 px-4 pt-4 drop-shadow-sm"
             >
@@ -90,19 +68,51 @@
                 name="ingreso_inicial"
                 class="peer block w-full border-none bg-transparent py-2.5 px-0 text-lg font-bold text-[#2166E5]"
                 placeholder=" "
-                :value="$store.state.b.ingresoFinal"
+                :value="iTotal.replace('MX', '')"
                 disabled
               />
               <label
                 for="ingreso_inicial"
                 class="absolute top-7 origin-[0] -translate-y-6 scale-75 transform text-base font-medium text-black duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
-                >Actual</label
+              >
+                {{
+                  $store.state.b.ingresoFinal == "$0.00" ? "Actual" : "Inicial"
+                }}</label
               >
             </div>
-          </TransitionRoot>
+            <TransitionRoot
+              appear
+              :show="$store.state.b.ingresoFinal != '$0.00'"
+              enter="transition-opacity duration-500"
+              enter-from="opacity-0"
+              enter-to="opacity-100"
+              leave="transition-opacity duration-500"
+              leave-from="opacity-100"
+              leave-to="opacity-0"
+              :class="$store.state.b.ingresoFinal != '$0.00' ? '' : 'absolute'"
+            >
+              <div
+                class="group relative mb-6 w-full rounded-lg border-2 px-4 pt-4 drop-shadow-sm"
+              >
+                <input
+                  type="text"
+                  name="ingreso_inicial"
+                  class="peer block w-full border-none bg-transparent py-2.5 px-0 text-lg font-bold text-[#2166E5]"
+                  placeholder=" "
+                  :value="$store.state.b.ingresoFinal"
+                  disabled
+                />
+                <label
+                  for="ingreso_inicial"
+                  class="absolute top-7 origin-[0] -translate-y-6 scale-75 transform text-base font-medium text-black duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 dark:text-gray-400 peer-focus:dark:text-blue-500"
+                  >Actual</label
+                >
+              </div>
+            </TransitionRoot>
+          </div>
         </div>
         <!-- Rentabilidad inicial -->
-        <div class="flex flex-col space-y-4">
+        <div class="flex w-full flex-col space-y-4 mt-4 lg:mt-0 md:mt-0">
           <div class="flex w-full justify-center text-lg font-medium">
             Rentabilidad Inicial
           </div>
@@ -173,7 +183,7 @@
               <div class="flex h-auto w-full w-auto flex-col">
                 <a
                   class="flex h-7 w-full cursor-pointer items-center rounded-md hover:bg-fondo-gris"
-                  @click="[$store.commit('openModalEditarTiempoVolumetria')]"
+                  @click=";[$store.commit('openModalEditarTiempoVolumetria')]"
                   >Editar tiempo/volumetria</a
                 >
               </div>
@@ -188,9 +198,9 @@
       </Suspense>
     </div>
     <!-- Tarjeta costos / gastos -->
-    <div class="flex h-full w-full justify-around">
+    <div class="flex flex-col space-y-6 lg:space-y-0 md:space-y-0 lg:flex-row md:flex-row h-full w-full justify-around">
       <div
-        class="flex w-[35%] flex-col rounded-lg border bg-white px-8 py-4 shadow-md"
+        class="flex w-full md:w-[35%] lg:w-[35%] flex-col rounded-lg border bg-white px-8 py-4 shadow-md"
       >
         <div class="flex w-full justify-end">
           <modal-editar-costos-gastos :data="data" />
@@ -345,43 +355,91 @@
             >
               <div class="flex flex-col">
                 <div>Material</div>
-                <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                  {{ dataDetalleCostosGastos.datos.material ? (dataDetalleCostosGastos.datos.material).toLocaleString("en") : 0 }}
+                <div
+                  class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                >
+                  {{
+                    dataDetalleCostosGastos.datos.material
+                      ? dataDetalleCostosGastos.datos.material.toLocaleString(
+                          "en"
+                        )
+                      : 0
+                  }}
                 </div>
               </div>
               <div class="flex flex-col">
                 <div>Mano de obra</div>
-                <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                  {{ dataDetalleCostosGastos.datos.manoDeObra ? (dataDetalleCostosGastos.datos.manoDeObra).toLocaleString("en") : 0 }}
+                <div
+                  class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                >
+                  {{
+                    dataDetalleCostosGastos.datos.manoDeObra
+                      ? dataDetalleCostosGastos.datos.manoDeObra.toLocaleString(
+                          "en"
+                        )
+                      : 0
+                  }}
                 </div>
               </div>
             </div>
-            <div v-else class="flex flex-col space-y-2 h-full w-full">
+            <div v-else class="flex h-full w-full flex-col space-y-2">
               <div class="flex w-full justify-around">
                 <div class="flex flex-col">
                   <div>Fijo</div>
-                  <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                    {{ dataDetalleCostosGastos.datos.fijo ? (dataDetalleCostosGastos.datos.fijo).toLocaleString("en") : 0 }}
+                  <div
+                    class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                  >
+                    {{
+                      dataDetalleCostosGastos.datos.fijo
+                        ? dataDetalleCostosGastos.datos.fijo.toLocaleString(
+                            "en"
+                          )
+                        : 0
+                    }}
                   </div>
                 </div>
-                <div class="flex flex-col ">
+                <div class="flex flex-col">
                   <div>Nómina</div>
-                  <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                    {{ dataDetalleCostosGastos.datos.nomina ? (dataDetalleCostosGastos.datos.nomina).toLocaleString("en") : 0 }}
+                  <div
+                    class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                  >
+                    {{
+                      dataDetalleCostosGastos.datos.nomina
+                        ? dataDetalleCostosGastos.datos.nomina.toLocaleString(
+                            "en"
+                          )
+                        : 0
+                    }}
                   </div>
                 </div>
               </div>
               <div class="flex w-full justify-around">
                 <div class="flex flex-col">
                   <div>Variable</div>
-                  <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                    {{ dataDetalleCostosGastos.datos.variable ? (dataDetalleCostosGastos.datos.variable).toLocaleString("en") : 0 }}
+                  <div
+                    class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                  >
+                    {{
+                      dataDetalleCostosGastos.datos.variable
+                        ? dataDetalleCostosGastos.datos.variable.toLocaleString(
+                            "en"
+                          )
+                        : 0
+                    }}
                   </div>
                 </div>
                 <div class="flex flex-col">
                   <div>Otros</div>
-                  <div class="border border-[#7C8495] rounded-md px-6 py-3 min-w-[120px] max-w-[120px] truncate">
-                    {{ dataDetalleCostosGastos.datos.otros ? (dataDetalleCostosGastos.datos.otros).toLocaleString("en") : 0 }}
+                  <div
+                    class="min-w-[120px] max-w-[120px] truncate rounded-md border border-[#7C8495] px-6 py-3"
+                  >
+                    {{
+                      dataDetalleCostosGastos.datos.otros
+                        ? dataDetalleCostosGastos.datos.otros.toLocaleString(
+                            "en"
+                          )
+                        : 0
+                    }}
                   </div>
                 </div>
               </div>
@@ -404,15 +462,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import { getDatabase, ref as refDB, get, child } from "firebase/database";
-import ModalFinalizarProyectos from "@/components/ModalFinalizarProyectos.vue";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import ModalEditarTiempoVolumetria from "@/components/ModalEditarTiempoVolumetria.vue";
-import ModalEditarCostosGastos from "@/components/ModalEditarCostosGastos.vue";
-import ProyectosProcesoAvance from "@/components/ProyectosProcesoAvance.vue";
-import { TransitionRoot } from "@headlessui/vue";
+import { ref, onMounted } from "vue"
+import { useRoute } from "vue-router"
+import { getDatabase, ref as refDB, get, child } from "firebase/database"
+import ModalFinalizarProyectos from "@/components/ModalFinalizarProyectos.vue"
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue"
+import ModalEditarTiempoVolumetria from "@/components/ModalEditarTiempoVolumetria.vue"
+import ModalEditarCostosGastos from "@/components/ModalEditarCostosGastos.vue"
+import ProyectosProcesoAvance from "@/components/ProyectosProcesoAvance.vue"
+import { TransitionRoot } from "@headlessui/vue"
 import {
   colorDegradado,
   colorDegradadoDos,
@@ -421,50 +479,50 @@ import {
   colorTextoRentabilidadNeta,
   colorFondoRentabilidadBruta,
   colorFondoRentabilidadNeta,
-} from "@/utils/color.js";
-import DetalleCostosGastos from "@/components/DetalleCostosGastos.vue";
+} from "@/utils/color.js"
+import DetalleCostosGastos from "@/components/DetalleCostosGastos.vue"
 
-const database = getDatabase();
-const route = useRoute();
-const proyectoRef = refDB(database);
+const database = getDatabase()
+const route = useRoute()
+const proyectoRef = refDB(database)
 const data = ref({
   nombre: "",
-});
+})
 const dataDetalleCostosGastos = ref({
   name: "",
   datos: "",
   control: 0,
-});
-const creado = ref();
-const iTotal = ref();
-const diasAvanzados = ref();
-const key = ref();
+})
+const creado = ref()
+const iTotal = ref()
+const diasAvanzados = ref()
+const key = ref()
 
 get(child(proyectoRef, `proyectos/${route.params.key}`)).then((snapshot) => {
   if (snapshot.exists()) {
-    data.value = snapshot;
-    const date = new Date(snapshot.val().creado);
+    data.value = snapshot
+    const date = new Date(snapshot.val().creado)
     creado.value =
       date.getDate() +
       "/" +
       String(date.getMonth() + 1).padStart(2, "0") +
       "/" +
-      date.getFullYear();
+      date.getFullYear()
     iTotal.value = snapshot.val().ingresoTotal.toLocaleString("en", {
       style: "currency",
       currency: "MXN",
-    });
+    })
   }
-});
+})
 
 onMounted(() => {
-  detalleCostosGastosFunc('CostoInterno', data.value.val().costoInterno)
+  detalleCostosGastosFunc("CostoInterno", data.value.val().costoInterno)
 })
 
 const detalleCostosGastosFunc = (titulo, datos) => {
-  dataDetalleCostosGastos.value.name = titulo;
-  dataDetalleCostosGastos.value.datos = datos;
-  if (titulo === "Gastos") dataDetalleCostosGastos.value.control = 1;
-  else dataDetalleCostosGastos.value.control = 0;
-};
+  dataDetalleCostosGastos.value.name = titulo
+  dataDetalleCostosGastos.value.datos = datos
+  if (titulo === "Gastos") dataDetalleCostosGastos.value.control = 1
+  else dataDetalleCostosGastos.value.control = 0
+}
 </script>
