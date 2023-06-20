@@ -5,7 +5,6 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDHjAy76lh3RqU2rGk5mIevIjiESjp1aT8",
   authDomain: "siosapp-business.firebaseapp.com",
-  databaseURL: "https://siosapp-business-default-rtdb.firebaseio.com",
   projectId: "siosapp-business",
   storageBucket: "siosapp-business.appspot.com",
   messagingSenderId: "998061503599",

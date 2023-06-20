@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full border bg-white transition-all duration-300 ease-in"
+    class="min-h-screen border bg-white transition-all duration-300 ease-in"
     :class="[$store.state.a.open ? 'z-40 w-[18%] shadow-right' : 'w-[0%]']"
   >
     <div

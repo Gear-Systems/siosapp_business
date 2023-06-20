@@ -1,12 +1,12 @@
 <template>
   <TransitionRoot
     appear
-    :show="$store.state.b.isOpenModalConfirmacion"
+    :show="confirmModal"
     as="template"
   >
     <Dialog
       as="div"
-      @close="$store.commit('closeModalConfirmacion')"
+      @close="confirmModal = false"
       class="relative z-50"
     >
       <TransitionChild
@@ -53,12 +53,12 @@
                 class="flex text-lg font-medium leading-6 text-gray-900"
               >
                 <div class="flex justify-center items-center w-full font-semibold text-xl">
-                  Estás a punto de iniciar el proyecto
+                  <slot name="message"></slot>
                 </div>
               </DialogTitle>
               <div class="flex flex-col w-full mt-2">
                 <div class="flex justify-center items-center w-full">
-                  ¿Quieres continuar?
+                  <slot name="question"></slot>
                 </div>
                 <div
                   class="flex w-full justify-center items-center space-x-8 mt-8"
@@ -82,12 +82,12 @@
                       focus-visible:ring-blue-500
                       focus-visible:ring-offset-2
                     "
-                    @click="$store.commit('closeModalConfirmacion')"
+                    @click="confirmModal = false"
                   >
                     Cancelar
                   </button>
                   <button
-                    @click="iniciarProyecto"
+                    @click="emits('confirm')"
                     type="button"
                     class="
                       inline-flex
@@ -107,7 +107,7 @@
                       focus-visible:ring-offset-2
                     "
                   >
-                    Iniciar
+                    <slot name="button-message"></slot>
                   </button>
                 </div>
               </div>
@@ -121,8 +121,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+import { useModals } from "../stores/modals"
+import { storeToRefs } from "pinia"
 import {
   TransitionRoot,
   TransitionChild,
@@ -130,24 +130,23 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
-import { getDatabase, ref as refDB, update, serverTimestamp } from "@firebase/database";
 
-const props = defineProps(["id", "rentabilidad"]);
-const database = getDatabase();
-const router = useRouter();
-const store = useStore();
+const modals = useModals()
+const { confirmModal } = storeToRefs(modals)
 
-const iniciarProyecto = () => {
-  update(refDB(database, `proyectos/${props.id}`), {
-    estado: "En proceso",
-    rentabilidad: {
-      bruta: props.rentabilidad.bruta,
-      neta: props.rentabilidad.neta,
-    },
-    fechaInicio: serverTimestamp(),
-  }).then(() => {
-    store.commit("closeModalConfirmacion");
-    router.push("/proyectos");
-  });
-};
+const emits = defineEmits(["confirm"])
+
+// const iniciarProyecto = () => {
+//   update(refDB(database, `proyectos/${props.id}`), {
+//     estado: "En proceso",
+//     rentabilidad: {
+//       bruta: props.rentabilidad.bruta,
+//       neta: props.rentabilidad.neta,
+//     },
+//     fechaInicio: serverTimestamp(),
+//   }).then(() => {
+//     store.commit("closeModalConfirmacion");
+//     router.push("/proyectos");
+//   });
+// };
 </script>

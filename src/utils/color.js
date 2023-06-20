@@ -27,6 +27,35 @@ export const colorDegradado = (unidad) => {
   return colorDegradado;
 };
 
+export const colorDegradadoHover = (unidad) => {
+  let colorDegradado;
+  let colorDegradadoDetalleFunc;
+
+  switch (unidad) {
+    case "Poliza":
+      colorDegradado = "hover:bg-gradient-to-tr hover:from-poliza hover:via-poliza-2 hover:to-poliza-3";
+      colorDegradadoDetalleFunc = "bg-gradient-to-tr from-poliza to-poliza-3";
+      break;
+    case "Megacable":
+      colorDegradado =
+        "hover:bg-gradient-to-tr hover:from-megacable hover:via-megacable-2 hover:to-megacable-3";
+      colorDegradadoDetalleFunc =
+        "bg-gradient-to-tr from-megacable to-megacable-3";
+      break;
+    case "Infraestructura":
+      colorDegradado =
+        "hover:bg-gradient-to-tr hover:from-infraestructura hover:via-infraestructura-2 hover:to-infraestructura-3";
+      colorDegradadoDetalleFunc =
+        "bg-gradient-to-tr from-infraestructura to-infraestructura-3";
+      break;
+    case "Ventas":
+      colorDegradado = "hover:bg-gradient-to-tr hover:from-ventas hover:via-ventas-2 hover:to-ventas-3";
+      colorDegradadoDetalleFunc = "bg-gradient-to-tr from-ventas to-ventas-3";
+      break;
+  }
+  return colorDegradado;
+};
+
 export const colorDegradadoDos = (unidad) => {
   let colorDegradadoDetalleFunc;
 

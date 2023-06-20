@@ -10,6 +10,7 @@ module.exports = {
       },
       colors: {
         'fondo-gris': '#C4C4C4',
+        'gray-text': '#7C8495',
         'fondo-gris-claro': '#F2F2F2',
         'fondo-principal': '#E5E5E5',
         'blue-siosapp': '#2166E5',

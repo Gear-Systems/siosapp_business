@@ -19,6 +19,7 @@ const router = createRouter({
     },
     {
       path: "/proyectos/:key",
+      name: "proyectos-pendientes",
       component: ProyectosPendientes,
       meta: { title: "Proyectos pendientes", authorization: true, layout: false },
     },
