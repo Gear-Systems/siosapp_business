@@ -34,7 +34,7 @@
                         : 'text-gray-900',
                       'group flex w-full items-center rounded-md px-2 py-2 text-sm font-semibold',
                     ]"
-                    @click="$router.push(`/proyectos/${props.data.key}`)"
+                    @click="$router.push(`/proyectos/${data.key}`)"
                   >
                     <div
                       :class="[
@@ -67,7 +67,7 @@
                         : 'text-gray-900',
                       'group flex w-full items-center rounded-md px-2 py-2 text-sm font-semibold',
                     ]"
-                    @click="$router.push(`/proyectos/${props.data.key}`)"
+                    @click="$router.push(`/proyectos/${data.key}`)"
                   >
                     <div
                       :class="[
@@ -132,16 +132,16 @@
       </div>
       <div
         class="flex h-auto w-full justify-center overflow-hidden break-words text-lg font-semibold"
-        :title="props.data.val().nombre"
+        :title="data.name"
       >
-        {{ props.data.val().nombre }}
+        {{ data.name }}
       </div>
     </div>
     <div class="flex h-[40%] w-full justify-between px-4">
       <div class="flex h-full w-[45%] flex-col">
         <div
           class="flex h-full w-full items-center justify-center rounded-md bg-fondo-gris text-3xl font-semibold text-white"
-          :class="[costos ? 'bg-[#44C4A1]' : 'bg-[#E56353]']"
+          :class="[data?.costos?.costoExterno.total > 0 || data?.costos?.costoInterno.total > 0 ? 'bg-[#44C4A1]' : 'bg-[#E56353]']"
         >
           <!-- <span class="bg-fondo-gris w-5 h-5 rounded-full"></span> -->
           C
@@ -151,14 +151,14 @@
       <div class="flex h-full w-[45%] flex-col">
         <div
           class="flex h-full w-full items-center justify-center rounded-md bg-fondo-gris text-3xl font-semibold text-white"
-          :class="[gastos ? 'bg-[#44C4A1]' : 'bg-[#E56353]']"
+          :class="[data?.costos?.gastosAdministrativos.total > 0 ? 'bg-[#44C4A1]' : 'bg-[#E56353]']"
         >
           G
         </div>
         <div class="flex w-full justify-center text-sm">Gastos</div>
       </div>
     </div>
-    <ModalEliminarProyecto :data="props.data" />
+    <!-- <ModalEliminarProyecto :data="props.data" /> -->
   </div>
 </template>
 
@@ -175,14 +175,14 @@ const route = useRoute();
 const costos = ref(false);
 const gastos = ref(false);
 
-if (props.data) {
-  if (
-    props.data.hasChild("costoInterno") ||
-    props.data.hasChild("costoExterno")
-  )
-    costos.value = true;
-  if (props.data.hasChild("gastos")) gastos.value = true;
-}
+// if (props.data) {
+//   if (
+//     props.data.hasChild("costoInterno") ||
+//     props.data.hasChild("costoExterno")
+//   )
+//     costos.value = true;
+//   if (props.data.hasChild("gastos")) gastos.value = true;
+// }
 
 const copy = () => {
   navigator.clipboard.writeText(

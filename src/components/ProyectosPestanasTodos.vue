@@ -33,7 +33,7 @@
         </div>
       </div>
       <!-- Finalizados -->
-      <div class="flex h-full min-h-[200px] w-full flex-row overflow-auto">
+      <div class="flex h-full min-h-[200px] w-full flex-row overflow-x-auto">
         <div
           class="flex h-full w-[260px] overflow-hidden py-2 px-4"
           v-for="(item, index) in props.finalizados"

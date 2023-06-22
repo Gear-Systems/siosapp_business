@@ -9,7 +9,7 @@ export const useProyectoPendiente = defineStore("proyecto-pendiente", () => {
   const isOpen = ref(false)
   const loadings = reactive({
     save: false,
-    init: false
+    init: false,
   })
   const costos = reactive({
     costoInterno: {
@@ -117,7 +117,7 @@ export const useProyectoPendiente = defineStore("proyecto-pendiente", () => {
   }
 
   async function saveData() {
-    loadings.save= true
+    loadings.save = true
     const docRef = doc(db, "proyectos", data.value.key)
     await updateDoc(docRef, {
       rentabilidades: {
@@ -127,11 +127,14 @@ export const useProyectoPendiente = defineStore("proyecto-pendiente", () => {
         ...costos,
       },
     })
-    notify({
-        group: 'foo',
-        title: 'Sucess',
-        text: "¡Los datos se han guardado correctamente.!"
-    }, 4000)
+    notify(
+      {
+        group: "foo",
+        title: "Sucess",
+        text: "¡Los datos se han guardado correctamente.!",
+      },
+      4000
+    )
     loadings.save = false
   }
 
@@ -139,8 +142,14 @@ export const useProyectoPendiente = defineStore("proyecto-pendiente", () => {
     loadings.init = true
     const docRef = doc(db, "proyectos", data.value.key)
     await updateDoc(docRef, {
-        status: "En proceso",
-        initDate: new Date().getTime()
+      rentabilidades: {
+        ...rentabilidad,
+      },
+      costos: {
+        ...costos,
+      },
+      status: "En proceso",
+      initDate: new Date().getTime(),
     })
     loadings.init = false
   }
@@ -155,5 +164,14 @@ export const useProyectoPendiente = defineStore("proyecto-pendiente", () => {
     return format
   }
 
-  return { data, costos, rentabilidad, loadings, isOpen, fetchData, saveData, initProject }
+  return {
+    data,
+    costos,
+    rentabilidad,
+    loadings,
+    isOpen,
+    fetchData,
+    saveData,
+    initProject,
+  }
 })

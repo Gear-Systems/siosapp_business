@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-full flex-col">
+  <div class="flex h-full w-full flex-col overflow-hidden">
     <!-- Nuevos proyectos / pendientes -->
     <div
       class="flex min-h-[42%] w-full flex-col rounded-xl bg-[#E9F0FC] px-4 py-8 md:min-h-[32%]"
@@ -7,7 +7,7 @@
       <div class="flex h-full w-full space-x-4">
         <!-- Agregar nuevo proyecto (solo si el dispositivo es desktop o laptop) -->
         <div
-          class="flex w-fit justify-center space-x-4 bg-red-200 rounded-xl"
+          class="flex w-fit justify-center space-x-4 rounded-xl bg-red-200"
           v-if="!$store.state.c.mobile"
         >
           <div
@@ -21,17 +21,14 @@
         </div>
         <!-- pendientes -->
         <div
-          class="flex h-full w-full cursor-pointer select-none flex-row overflow-scroll custom-scrollbar"
+          class="custom-scrollbar flex h-full w-full cursor-pointer select-none flex-row overflow-x-scroll"
         >
           <div
             class="flex h-full w-[40%] min-w-[60%] py-2 px-4 md:min-w-[30%] lg:min-w-[40%] xl:min-w-[30%] xl:max-w-xs"
-            v-for="(item, index) in proyectosPendientes"
+            v-for="(item, index) in proyectos.todos.pendientes"
             :key="index"
           >
-            <component
-              :is="item.component ? item.component : ProyectosTarjetaPendiente"
-              :data="item"
-            ></component>
+            <ProyectosTarjetaPendiente :data="item" />
           </div>
         </div>
         <!-- <div class="flex h-full w-fit min-w-[170px] select-none py-2 px-4">
@@ -43,15 +40,16 @@
     <!-- Pestañas -->
     <div class="my-6 flex h-full w-full flex-col bg-white">
       <div class="text-xl font-semibold">Unidades de Negocio</div>
-      <TabGroup @change="cambioPestana">
+      <TabGroup>
         <TabList class="border-b-2">
-          <div class="flex overflow-scroll pt-4">
+          <div class="flex overflow-x-auto pt-4">
             <Tab
               v-slot="{ selected }"
               as="template"
               v-for="item in unidadesNegocio"
               :key="item"
               ><button
+                @click="changeFilter(item.name)"
                 class="select-none border-b-2 bg-white px-14 py-2"
                 :class="[
                   selected
@@ -67,10 +65,7 @@
         <TabPanels>
           <TabPanel v-for="item in unidadesNegocio">
             <div class="mt-4">
-              <proyectos-pestanas-todos
-                :enProceso="proyectosEnProceso"
-                :finalizados="proyectosFinalizados"
-              />
+              <ProyectosAvances />
             </div>
           </TabPanel>
         </TabPanels>
@@ -81,23 +76,32 @@
 </template>
 
 <script setup>
-import { ref, markRaw } from "vue";
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import ProyectoNuevo from "@/components/ProyectosNuevo.vue";
-import ProyectosTarjetaPendiente from "@/components/ProyectosTarjetaPendiente.vue";
-import ProyectosPestanasTodos from "@/components/ProyectosPestanasTodos.vue";
-import TarjetaTodosProyectos from "@/components/TarjetaTodosProyectos.vue";
+import { ref, markRaw } from "vue"
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue"
+import ProyectoNuevo from "@/components/ProyectosNuevo.vue"
+import ProyectosTarjetaPendiente from "@/components/ProyectosTarjetaPendiente.vue"
+import ProyectosPestanasTodos from "@/components/ProyectosPestanasTodos.vue"
+import TarjetaTodosProyectos from "@/components/TarjetaTodosProyectos.vue"
+import { useProyectos } from "../stores/proyectos"
+import { storeToRefs } from "pinia"
+import ProyectosAvances from "@/components/ProyectosAvances.vue"
+
+const store = useProyectos()
+const { proyectos } = storeToRefs(store)
+const { fetchData, changeFilter } = store
+
+fetchData()
 
 const proyectosPendientes = ref([
   {
     title: "ver todos los proyectos",
     component: markRaw(TarjetaTodosProyectos),
   },
-]);
-const proyectosEnProceso = ref([]);
-const proyectosFinalizados = ref([]);
-const snapshotData = ref();
-const consulta = ref();
+])
+const proyectosEnProceso = ref([])
+const proyectosFinalizados = ref([])
+const snapshotData = ref()
+const consulta = ref()
 
 const unidadesNegocio = ref([
   { name: "Todos", disabled: false },
@@ -105,44 +109,12 @@ const unidadesNegocio = ref([
   { name: "Poliza", disabled: false },
   { name: "Megacable", disabled: false },
   { name: "Ventas", disabled: false },
-]);
-
-function cambioPestana(index) {
-  proyectosEnProceso.value = [];
-  proyectosFinalizados.value = [];
-
-  Object.entries(snapshotData.value).forEach(([key, value]) => {
-    // En proceso
-    if (
-      (value.estado === "En proceso" &&
-        value.unidad === unidadesNegocio.value[index].name) ||
-      (value.estado === "En proceso" &&
-        unidadesNegocio.value[index].name === "Todos")
-    ) {
-      proyectosEnProceso.value.push({
-        key: key,
-        value: value,
-      });
-    }
-    // Finalizados
-    if (
-      (value.estado === "Finalizado" &&
-        value.unidad === unidadesNegocio.value[index].name) ||
-      (value.estado === "Finalizado" &&
-        unidadesNegocio.value[index].name === "Todos")
-    ) {
-      proyectosFinalizados.value.push({
-        key: key,
-        value: value,
-      });
-    }
-  });
-}
+])
 
 const settings = {
   itemsToShow: 1,
   snapAlign: "center",
-};
+}
 </script>
 
 <style>
@@ -151,7 +123,7 @@ const settings = {
 }
 
 .custom-scrollbar::-webkit-scrollbar:vertical {
-    width:10px;
+  width: 10px;
 }
 
 .carousel__viewport {

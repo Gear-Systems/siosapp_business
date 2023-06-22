@@ -1,15 +1,15 @@
 <template>
   <div
     class="flex h-full w-full cursor-pointer flex-col space-y-2 rounded-lg bg-[url('/img/tarjeta_fondo_enproceso.svg')] bg-cover bg-no-repeat p-6 shadow-md select-none"
-    @click="$router.push(`/proyectos/en-proceso/${props.data.key}`)"
+    @click="$router.push(`/proyectos/en-proceso/${data.key}`)"
   >
     <div class="flex h-full w-full flex-col">
       <div class="flex flex-col">
         <div
           class="flex w-full truncate text-base font-semibold"
-          :title="props.data.value.nombre"
+          :title="data.name"
         >
-          {{ props.data.value.nombre }}
+          {{ data.name }}
         </div>
       </div>
       <div class="flex w-full flex-col items-start space-y-3">
@@ -24,7 +24,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Bruta</div>
               <div class="text-base font-semibold">
-                {{ cambioRentabilidad.bruta ? cambioRentabilidad.bruta : props.data.value.rentabilidad.bruta }}%
+                {{ (data.rentabilidades.brutaInicial).toFixed(2) }}%
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Neta</div>
               <div class="text-base font-semibold">
-                {{ cambioRentabilidad.neta ? cambioRentabilidad.neta : props.data.value.rentabilidad.neta }}%
+                {{ (data.rentabilidades.netaInicial).toFixed(2) }}%
               </div>
             </div>
           </div>
@@ -73,21 +73,21 @@ const cambioRentabilidad = ref({
 })
 const db = getDatabase();
 
-get(child(refDB(db), `/avanceProyectos/${props.data.key}`)).then((snapshot) =>{
-  // Valida si existe un avance de proyecto
-  if(snapshot.exists){
-    // Valida si existe cambios en las rentabilidades
-    if(snapshot.hasChild("rentabilidad")) {
-      // Valida si el cambio es en la rentabilidad bruta
-      if(snapshot.hasChild("rentabilidad/bruta")) {
-        cambioRentabilidad.value.bruta = snapshot.val().rentabilidad.bruta;
-      }
-      // Valida si el cambio es en la rentabilidad neta
-      if(snapshot.hasChild("rentabilidad/neta")) {
-        cambioRentabilidad.value.neta = snapshot.val().rentabilidad.neta;
-      }
-    }
-  }
-})
+// get(child(refDB(db), `/avanceProyectos/${props.data.key}`)).then((snapshot) =>{
+//   // Valida si existe un avance de proyecto
+//   if(snapshot.exists){
+//     // Valida si existe cambios en las rentabilidades
+//     if(snapshot.hasChild("rentabilidad")) {
+//       // Valida si el cambio es en la rentabilidad bruta
+//       if(snapshot.hasChild("rentabilidad/bruta")) {
+//         cambioRentabilidad.value.bruta = snapshot.val().rentabilidad.bruta;
+//       }
+//       // Valida si el cambio es en la rentabilidad neta
+//       if(snapshot.hasChild("rentabilidad/neta")) {
+//         cambioRentabilidad.value.neta = snapshot.val().rentabilidad.neta;
+//       }
+//     }
+//   }
+// })
 
 </script>
