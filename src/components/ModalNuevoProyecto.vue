@@ -34,7 +34,7 @@
               >
                 <div class="w-[95%]">Crear nuevo proyecto</div>
                 <div class="w-[5%]">
-                  <div class="h-5 w-5 rounded-full bg-fondo-gris"></div>
+                  <div @click="newProyect = false" class="h-5 w-5 rounded-full bg-fondo-gris cursor-pointer"></div>
                 </div>
               </DialogTitle>
               <div class="mt-2">
@@ -163,7 +163,7 @@
                     <button
                       type="button"
                       class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      @click="$store.commit('closeModalNuevoProyecto')"
+                      @click="newProyect = false"
                     >
                       Cancelar
                     </button>
@@ -212,6 +212,7 @@ import {
   getDocs,
   getDoc,
   doc,
+  
 } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 import { useRouter } from "vue-router"
@@ -233,6 +234,8 @@ async function fetchData() {
   if (unidadNegocioSnap.exists) {
     console.log(unidadNegocioSnap.data())
     data.value = unidadNegocioSnap.data()
+  } else {
+    alert("ERROR")
   }
 }
 await fetchData()
@@ -255,8 +258,16 @@ const crearProyecto = async () => {
     ...formData,
     created: new Date().getTime(),
     uid: auth.currentUser.uid,
-    status: "Pendiente"
+    status: "Pendiente",
   })
+  for (const e in formData.volumetryData) {
+    await addDoc(
+      collection(database, "proyectos", proyectSnap.id, "volumetrias"),
+      {
+        ...formData.volumetryData[e],
+      }
+    )
+  }
   loading.value = false
   newProyect.value = false
   router.push(`proyectos/${proyectSnap.id}`)

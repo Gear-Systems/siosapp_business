@@ -7,7 +7,7 @@
       <div class="flex h-full w-full space-x-4">
         <!-- Agregar nuevo proyecto (solo si el dispositivo es desktop o laptop) -->
         <div
-          class="flex w-fit justify-center space-x-4 rounded-xl bg-red-200"
+          class="flex w-fit justify-center space-x-4 rounded-xl border-2 border-gray-300 p-2"
           v-if="!$store.state.c.mobile"
         >
           <div

@@ -1,12 +1,12 @@
 <template>
   <TransitionRoot
     appear
-    :show="$store.state.b.isOpenModalFinalizarProyecto"
+    :show="finalizarFolioModal"
     as="template"
   >
     <Dialog
       as="div"
-      @close="$store.commit('closeModalFinalizarProyecto')"
+      @close="finalizarFolioModal = false"
       class="relative z-50"
     >
       <TransitionChild
@@ -91,7 +91,7 @@
                       focus-visible:ring-blue-500
                       focus-visible:ring-offset-2
                     "
-                    @click="$store.commit('closeModalFinalizarProyecto')"
+                    @click="finalizarFolioModal = false"
                   >
                     Cancelar
                   </button>
@@ -132,6 +132,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { useProyectosEnProceso } from "@/stores/proyectosEnProceso"
+import { storeToRefs } from "pinia"
 import {
   TransitionRoot,
   TransitionChild,
@@ -139,21 +141,23 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
-import {
-  getDatabase,
-  ref as refDB,
-  update,
-  serverTimestamp,
-} from "@firebase/database";
+import { getFirestore, doc, updateDoc } from "firebase/firestore"
 
+const store = useProyectosEnProceso();
+const { finalizarFolioModal, data } = storeToRefs(store)
 const props = defineProps(["data"]);
-const database = getDatabase();
-const router = useRouter();
+const db = getFirestore()
+const router = useRouter()
 
-const finalizar = () => {
-  update(refDB(database, `proyectos/${props.data.key}`), {
-    estado: "Finalizado",
-    fechaFinalizado: serverTimestamp(),
-  }).then(() => { router.push(`/proyectos/finalizados/${props.data.key}`) });
-};
+const finalizar = async () => {
+  const docRef = doc(db, "proyectos", data.value.key)
+  await updateDoc(docRef, {
+    status: "finalizado",
+    finishDate: new Date().getTime(),
+  }).then(() => {
+    finalizarFolioModal.value = false
+    router.push(`/proyectos/finalizados/${data.value.key}`)
+  })
+}
+  
 </script>
