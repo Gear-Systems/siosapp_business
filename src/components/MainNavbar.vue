@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full items-center justify-center sm:space-x-12 md:space-x-12">
+  <div class="flex h-full w-full sm:space-x-12 md:space-x-12">
     <div class="z-40 flex h-full items-end justify-end">
       <!-- icono menu -->
       <div
@@ -25,12 +25,14 @@
     >
       <img src="/img/logo.svg" alt="logo_siosapp" />
     </div>
-    <div class="flex w-full items-center justify-center xl:justify-end lg:justify-center">
-      <div class="flex justify-between items-center space-x-6 lg:pr-24">
+    <div
+      class="flex w-full items-center justify-center lg:justify-center xl:justify-end"
+    >
+      <div class="flex items-center justify-between space-x-6 lg:pr-24">
         <div>
           <button
             class="rounded-xl bg-blue-siosapp py-1.5 px-3 text-white hover:bg-blue-siosapp/70"
-            @click="$store.commit('openModalNuevoProyecto')"
+            @click="newProyect = true"
           >
             Nuevo proyecto
           </button>
@@ -55,11 +57,18 @@
         </div>
       </div>
     </div>
+    <Suspense v-if="newProyect">
+      <ModalNuevoProyecto />
+    </Suspense>
   </div>
 </template>
 
-<script>
-export default {
-  setup() {},
-};
+<script setup>
+import { ref } from "vue";
+import ModalNuevoProyecto from "./ModalNuevoProyecto.vue";
+import { useModals } from "../stores/modals";
+import { storeToRefs } from "pinia";
+
+const modals = useModals();
+const { newProyect } = storeToRefs(modals);
 </script>

@@ -1,0 +1,149 @@
+[debug] [2023-07-17T17:21:38.817Z] ----------------------------------------------------------------------
+[debug] [2023-07-17T17:21:38.819Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Sistemas\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2023-07-17T17:21:38.819Z] CLI Version:   12.3.0
+[debug] [2023-07-17T17:21:38.819Z] Platform:      win32
+[debug] [2023-07-17T17:21:38.820Z] Node Version:  v16.15.1
+[debug] [2023-07-17T17:21:38.828Z] Time:          Mon Jul 17 2023 11:21:38 GMT-0600 (GMT-06:00)
+[debug] [2023-07-17T17:21:38.828Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-07-17T17:21:38.831Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-07-17T17:21:38.909Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-07-17T17:21:38.909Z] > authorizing via signed-in user (iosgearsystems@gmail.com)
+[debug] [2023-07-17T17:21:39.036Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-07-17T17:21:39.037Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2023-07-17T17:21:39.212Z] java version "17.0.7" 2023-04-18 LTS
+Java(TM) SE Runtime Environment (build 17.0.7+8-LTS-224)
+Java HotSpot(TM) 64-Bit Server VM (build 17.0.7+8-LTS-224, mixed mode, sharing)
+
+[debug] [2023-07-17T17:21:39.228Z] Parsed Java major version: 17
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting, storage, extensions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting, storage, extensions"}}
+[debug] [2023-07-17T17:21:39.230Z] > refreshing access token with scopes: []
+[debug] [2023-07-17T17:21:39.231Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-07-17T17:21:39.231Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-07-17T17:21:39.373Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-07-17T17:21:39.373Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-07-17T17:21:39.379Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business [none]
+[debug] [2023-07-17T17:21:39.585Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business 200
+[debug] [2023-07-17T17:21:39.586Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business {"projectId":"siosapp-business","projectNumber":"998061503599","displayName":"siosapp-business","name":"projects/siosapp-business","resources":{"hostingSite":"siosapp-business","realtimeDatabaseInstance":"siosapp-business-default-rtdb","storageBucket":"siosapp-business.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_a34c126c-ad8f-4229-afc2-3410ef5d0d68"}
+[debug] [2023-07-17T17:21:39.597Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.597Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.597Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.598Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.598Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.598Z] [storage] Storage Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.598Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-07-17T17:21:39.610Z] [hub] writing locator at C:\Users\Sistemas\AppData\Local\Temp\hub-siosapp-business.json
+[debug] [2023-07-17T17:21:39.617Z] [Extensions] Started Extensions emulator, this is a noop.
+[debug] [2023-07-17T17:21:39.619Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.619Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-07-17T17:21:39.619Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] !  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, pubsub\u001b[22m"}}
+[debug] [2023-07-17T17:21:39.623Z] defaultcredentials: writing to file C:\Users\Sistemas\AppData\Roaming\firebase\iosgearsystems_gmail_com_application_default_credentials.json
+[debug] [2023-07-17T17:21:39.628Z] Setting GAC to C:\Users\Sistemas\AppData\Roaming\firebase\iosgearsystems_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\Sistemas\\AppData\\Roaming\\firebase\\iosgearsystems_gmail_com_application_default_credentials.json"}}
+[debug] [2023-07-17T17:21:39.629Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig [none]
+[debug] [2023-07-17T17:21:39.892Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig 200
+[debug] [2023-07-17T17:21:39.893Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig {"projectId":"siosapp-business","databaseURL":"https://siosapp-business-default-rtdb.firebaseio.com","storageBucket":"siosapp-business.appspot.com","locationId":"us-central"}
+[debug] [2023-07-17T17:21:39.907Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-07-17T17:21:39.907Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-07-17T17:21:39.907Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","C:\\Users\\Sistemas\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.17.4.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","siosapp-business","--rules","C:\\Users\\Sistemas\\Documents\\repositorios\\siosapp_business\\firestore.rules","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"C:\\\\Users\\\\Sistemas\\\\.cache\\\\firebase\\\\emulators\\\\cloud-firestore-emulator-v1.17.4.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"siosapp-business\",\"--rules\",\"C:\\\\Users\\\\Sistemas\\\\Documents\\\\repositorios\\\\siosapp_business\\\\firestore.rules\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[info] +  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-07-17T17:21:46.414Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-07-17T17:21:47.059Z] Temp file directory for storage emulator: C:\Users\Sistemas\AppData\Local\Temp/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: C:\\Users\\Sistemas\\AppData\\Local\\Temp/firebase/storage/blobs"}}
+[debug] [2023-07-17T17:21:47.066Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/siosapp-business/sites 
+[debug] [2023-07-17T17:21:47.498Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/siosapp-business/sites 200
+[debug] [2023-07-17T17:21:47.498Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/siosapp-business/sites {"sites":[{"name":"projects/siosapp-business/sites/siosapp-business","defaultUrl":"https://siosapp-business.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-07-17T17:21:47.498Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/webApps/-/config [none]
+[debug] [2023-07-17T17:21:47.832Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/webApps/-/config 200
+[debug] [2023-07-17T17:21:47.832Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/webApps/-/config {"projectId":"siosapp-business","appId":"1:998061503599:web:d5456e0392893b68b8899a","databaseURL":"https://siosapp-business-default-rtdb.firebaseio.com","storageBucket":"siosapp-business.appspot.com","locationId":"us-central","apiKey":"AIzaSyDHjAy76lh3RqU2rGk5mIevIjiESjp1aT8","authDomain":"siosapp-business.firebaseapp.com","messagingSenderId":"998061503599","measurementId":"G-NPCJPCTMF4"}
+[debug] [2023-07-17T17:21:47.836Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business [none]
+[debug] [2023-07-17T17:21:48.016Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business 200
+[debug] [2023-07-17T17:21:48.017Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business {"projectId":"siosapp-business","projectNumber":"998061503599","displayName":"siosapp-business","name":"projects/siosapp-business","resources":{"hostingSite":"siosapp-business","realtimeDatabaseInstance":"siosapp-business-default-rtdb","storageBucket":"siosapp-business.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_a34c126c-ad8f-4229-afc2-3410ef5d0d68"}
+[info] i  hosting[siosapp-business]: Serving hosting files from: dist {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mdist\u001b[22m"}}
+[info] +  hosting[siosapp-business]: Local server: http://127.0.0.1:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5000\u001b[22m\u001b[24m"}}
+[debug] [2023-07-17T17:21:48.037Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-07-17T17:21:48.037Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-07-17T17:21:48.037Z] Starting Emulator UI with command {"binary":"node","args":["C:\\Users\\Sistemas\\.cache\\firebase\\emulators\\ui-v1.11.6\\server\\server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"C:\\\\Users\\\\Sistemas\\\\.cache\\\\firebase\\\\emulators\\\\ui-v1.11.6\\\\server\\\\server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-07-17T17:21:48.156Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-07-17T17:21:48.156Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[debug] [2023-07-17T17:21:48.304Z] [Extensions] Connecting Extensions emulator, this is a noop.
+[info] i  functions: Watching "C:\Users\Sistemas\Documents\repositorios\siosapp_business\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\Sistemas\\Documents\\repositorios\\siosapp_business\\functions\" for Cloud Functions..."}}
+[debug] [2023-07-17T17:21:48.308Z] Validating nodejs source
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2023-07-17T17:21:49.263Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2023-07-17T17:21:49.263Z] Building nodejs source
+[debug] [2023-07-17T17:21:49.264Z] Failed to find version of module node: reached end of search path C:\Users\Sistemas\Documents\repositorios\siosapp_business\functions\node_modules
+[warn] !  functions: Your requested "node" version "18" doesn't match your global version "16". Using node@16 from host. 
+[debug] [2023-07-17T17:21:49.266Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-07-17T17:21:49.275Z] Found firebase-functions binary at 'C:\Users\Sistemas\Documents\repositorios\siosapp_business\functions\node_modules\.bin\firebase-functions'
+[debug] [2023-07-17T17:21:49.522Z] Serving at port 8395
+
+[debug] [2023-07-17T17:21:49.783Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-07-17T17:21:49.787Z] shutdown requested via /__/quitquitquit
+
+[info] +  functions: Loaded functions definitions from source: . {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: ."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬──────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth       │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:4000/firestore  │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5000 │ n/a                              │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:4000/storage    │
+├────────────────┼────────────────┼──────────────────────────────────┤
+│ Extensions     │ 127.0.0.1:5001 │ http://127.0.0.1:4000/extensions │
+└────────────────┴────────────────┴──────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+┌─────────────────────────┬───────────────┬─────────────────────┐
+│ Extension Instance Name │ Extension Ref │ View in Emulator UI │
+└─────────────────────────┴───────────────┴─────────────────────┘
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-07-17T18:17:21.945Z] >>> [apiv2][query] POST http://127.0.0.1:5001/functions/projects/siosapp-business/trigger_multicast [none]
+[debug] [2023-07-17T18:17:21.945Z] >>> [apiv2][body] POST http://127.0.0.1:5001/functions/projects/siosapp-business/trigger_multicast {"eventId":"3bd663cc-d1e7-4522-8dfd-c9f81533093f","eventType":"providers/firebase.auth/eventTypes/user.create","resource":{"name":"projects/siosapp-business","service":"firebaseauth.googleapis.com"},"params":{},"timestamp":"2023-07-17T18:17:21.944Z","data":{"uid":"qqXTeufc0d1YT5bUHO9i1oQZqi2U","email":"malfaro@ioscomunicaciones.com","emailVerified":true,"displayName":"Manuel Alfaro","photoURL":"","metadata":{"creationTime":"2023-07-17T18:17:21.942Z","lastSignInTime":"2023-07-17T18:17:21.942Z"},"customClaims":{},"providerData":[{"providerId":"password","email":"malfaro@ioscomunicaciones.com","federatedId":"malfaro@ioscomunicaciones.com","rawId":"malfaro@ioscomunicaciones.com","displayName":"Manuel Alfaro","photoUrl":""}],"mfaInfo":[]}}
+[debug] [2023-07-17T18:17:21.951Z] <<< [apiv2][status] POST http://127.0.0.1:5001/functions/projects/siosapp-business/trigger_multicast 200
+[debug] [2023-07-17T18:17:21.951Z] <<< [apiv2][body] POST http://127.0.0.1:5001/functions/projects/siosapp-business/trigger_multicast {"status":"multicast_acknowledged"}
+[debug] [2023-07-17T18:17:38.430Z] > refreshing access token with scopes: []
+[debug] [2023-07-17T18:17:38.431Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-07-17T18:17:38.431Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-07-17T18:17:38.581Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-07-17T18:17:38.581Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-07-17T18:17:38.587Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig [none]
+[debug] [2023-07-17T18:17:38.873Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig 200
+[debug] [2023-07-17T18:17:38.873Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/siosapp-business/adminSdkConfig {"projectId":"siosapp-business","databaseURL":"https://siosapp-business-default-rtdb.firebaseio.com","storageBucket":"siosapp-business.appspot.com","locationId":"us-central"}

@@ -3,11 +3,7 @@
     <div class="flex h-full w-full items-center justify-center space-x-12">
       <div class="flex flex-col">
         <GraficaFinalizados
-          :porcentaje="
-            props.dataFinal.rentabilidad
-              ? props.dataFinal.rentabilidad.bruta
-              : props.data.rentabilidad.bruta
-          "
+          :porcentaje="data.rentabilidadBrutaPorcentaje"
           :color="props.coloresRentabilidadTexto.bruta"
         />
         <div
@@ -26,11 +22,7 @@
       </div>
       <div class="flex flex-col">
         <GraficaFinalizados
-          :porcentaje="
-            props.dataFinal.rentabilidad
-              ? props.dataFinal.rentabilidad.neta
-              : props.data.rentabilidad.neta
-          "
+          :porcentaje="data.rentabilidadNetaPorcentaje"
           :color="props.coloresRentabilidadTexto.neta"
         />
         <div
@@ -107,7 +99,11 @@ import { ref, onMounted } from "vue";
 import GraficaFinalizados from "./GraficaFinalizados.vue";
 import ProyectosFinalizadosDetalle from "./ProyectosFinalizadosDetalle.vue";
 import { TransitionRoot } from "@headlessui/vue";
+import { useProyectosFinalizados } from "@/stores/proyectosFinalizados"
+import { storeToRefs } from "pinia"
 
+const store = useProyectosFinalizados()
+const { data } = storeToRefs(store)
 const detalle = ref(false);
 const props = defineProps([
   "data",

@@ -1,29 +1,31 @@
 <script setup>
-import { ref, reactive } from "vue";
-import Sidebar from './components/Sidebar.vue';
-import SidebarMobile from './components/SidebarMobile.vue';
-import MainContainer from './components/Main.vue';
-import { useStore } from 'vuex';
-const store = useStore();
+import { ref } from "vue"
+import LoginTemplate from "./templates/LoginTemplate.vue"
+import AuthorizedTemplate from "./templates/AuthorizedTemplate.vue"
+import MainContainer from "./components/Main.vue"
+import { useStore } from "vuex"
+const store = useStore()
+
+const mobile = ref(false)
 
 const checkScreen = () => {
-  store.state.c.windowsWidth = window.innerWidth;
-  if(store.state.c.windowsWidth  <= 768) {
-    store.state.c.mobile = true;
-    return;
+  const windowsWidth = window.innerWidth
+  if (windowsWidth <= 768) {
+    mobile.value = true
+    return
   }
-  store.state.c.mobile = false;
-  store.state.c.mobileNav = false;
-  return;
+  mobile.value = false
+  // store.state.c.mobileNav = false;
+  return
 }
-
 window.addEventListener("resize", checkScreen)
-checkScreen();
+checkScreen()
 </script>
 
 <template>
-  <div class="flex w-full h-screen">
-      <component :is="$store.state.c.mobile ? SidebarMobile : Sidebar"></component>
-    <div class="bg-white w-full h-full overflow-hidden"> <MainContainer /> </div>
-  </div>
+  <component
+    :is="$route.meta?.layout ? LoginTemplate : AuthorizedTemplate"
+    :isMobile="mobile"
+  >
+  </component>
 </template>

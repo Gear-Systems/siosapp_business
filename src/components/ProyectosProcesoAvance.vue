@@ -1,16 +1,13 @@
 <template>
-  <div class="flex  w-full">
-    <div class="flex flex-col w-[70%] h-fit">
+  <div class="flex w-full">
+    <div class="flex h-fit w-[100%] flex-col">
       <!-- Avance -->
-      <div class="flex h-full flex-col w-fit">
+      <div class="flex h-full w-fit flex-col">
         <!-- Tiempo -->
         <div class="flex w-full">
           <div class="flex w-full flex-col">
             <!-- Componente -->
-            <div
-              class="mb-12 flex w-full justify-between"
-              v-if="props.data.val().tiempo"
-            >
+            <div class="mb-12 flex w-full justify-between" v-if="data.time">
               <div class="flex w-[70%] flex-col">
                 <div class="flex w-full justify-between py-1">
                   <div class="flex h-[60%] w-[28%] flex-col p-2">
@@ -19,15 +16,37 @@
                       for="iTotal"
                       >Avance</label
                     >
-                    <div class="flex w-full">
+                    <div class="relative flex w-full">
                       <input
-                        v-model="tiempoNuevoAvance"
-                        @change="guardar('tiempo')"
-                        class="h-full w-full rounded-md border border-[#7C8495] bg-white text-lg font-semibold"
+                        @change="validateInput('time')"
+                        v-model="avances.time.new"
+                        class="h-full w-full rounded-md border border-[#7C8495] bg-white pr-12 text-lg font-semibold"
                         type="number"
                         id="rNeta"
                         min="0"
                       />
+                      <div
+                        v-show="avances.time.isChange"
+                        class="absolute inset-y-0 right-[42px] flex items-center justify-center"
+                      >
+                        <div v-if="!loadings.time" class="flex w-full">
+                          <div
+                            @click="saveNewTime"
+                            class="cursor-pointer px-0.5 text-gray-500 hover:text-black"
+                          >
+                            <CheckIcon class="h-5 w-5" />
+                          </div>
+                          <div
+                            @click="avances.time.new = 0"
+                            class="cursor-pointer px-0.5 text-gray-500 hover:text-black"
+                          >
+                            <XIcon class="h-5 w-5" />
+                          </div>
+                        </div>
+                        <div v-else class="flex w-full">
+                          <IconSpinner />
+                        </div>
+                      </div>
                       <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
@@ -42,13 +61,13 @@
                       >A la fecha</label
                     >
                     <div class="flex w-full">
-                      <input
-                        class="h-full w-full rounded-md border border-[#7C8495] bg-white text-center text-lg font-semibold"
+                      <div
+                        class="flex h-10 w-full items-center justify-center rounded-md border border-[#7C8495] bg-white text-center text-lg font-semibold"
                         type="text"
                         id="tiempoActual"
-                        :value="tiempoAvance"
-                        readonly
-                      />
+                      >
+                        {{ avances.time.current }}
+                      </div>
                       <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
@@ -66,13 +85,13 @@
                       >Tiempo total</label
                     >
                     <div class="flex w-full">
-                      <input
-                        class="h-full w-full rounded-md border border-[#7C8495] bg-white text-center text-lg font-semibold"
+                      <div
+                        class="flex h-10 w-full items-center justify-center rounded-md border border-[#7C8495] bg-white text-center text-lg font-semibold"
                         type="text"
                         id="tiempoTotal"
-                        :value="props.data.val().tiempo"
-                        readonly
-                      />
+                      >
+                        {{ data.time }}
+                      </div>
                       <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
@@ -87,16 +106,18 @@
                   <div class="mb-1 flex w-full justify-between">
                     <span class="text-sm">Progreso</span>
                     <span class="text-sm font-medium"
-                      >{{ tiempoPorcentaje }}%</span
+                      >{{ avances.time.progress.toFixed(2) }}%</span
                     >
                   </div>
-                  <div class="h-2.5 w-full rounded-full bg-[#E9F0FC]">
+                  <div
+                    class="h-2.5 w-full overflow-hidden rounded-full bg-[#E9F0FC]"
+                  >
                     <div
                       :class="[
-                        colorFondoRentabilidadBruta(props.data.val().unidad),
+                        colorFondoRentabilidadBruta(data.business_unit),
                         'h-2.5 rounded-full transition-all duration-500',
                       ]"
-                      :style="`width: ${tiempoPorcentaje}%`"
+                      :style="`width: ${avances.time.progress}%`"
                     ></div>
                   </div>
                 </div>
@@ -110,7 +131,7 @@
             <!-- Componente 2 -->
             <div
               class="mb-12 flex w-full justify-between"
-              v-for="(volumen, key, index) in props.data.val().volumetrias"
+              v-for="(volumen, index) in avances.volumetrias"
               :key="index"
             >
               <div class="flex w-[70%] flex-col">
@@ -121,17 +142,39 @@
                       :for="`nuevoAvance[${index}]`"
                       >Avance</label
                     >
-                    <div class="flex w-full">
+                    <div class="relative flex w-full">
                       <input
-                        v-model="nuevoAvance[index]"
-                        @change="guardar(index)"
-                        class="h-full w-full rounded-md border bg-white text-lg font-semibold"
+                        @change="validateInput('', index)"
+                        v-model="volumen.new"
+                        class="h-full w-full max-w-[125px] rounded-md border border-[#7C8495] bg-white pr-12 text-lg font-semibold"
                         type="number"
                       />
                       <div
+                        v-show="volumen.isChange"
+                        class="absolute inset-y-0 right-[14px] flex items-center justify-center"
+                      >
+                        <div v-if="!volumen.loading" class="flex w-full">
+                          <div
+                            @click="saveNewVolumetry(index)"
+                            class="cursor-pointer px-0.5 text-gray-500 hover:text-black"
+                          >
+                            <CheckIcon class="h-5 w-5" />
+                          </div>
+                          <div
+                            @click="volumen.new = 0"
+                            class="cursor-pointer px-0.5 text-gray-500 hover:text-black"
+                          >
+                            <XIcon class="h-5 w-5" />
+                          </div>
+                        </div>
+                        <div v-else class="flex w-full">
+                          <IconSpinner />
+                        </div>
+                      </div>
+                      <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
-                        {{ volumen.unidad }}
+                        {{ volumen.atajo }}
                       </div>
                     </div>
                   </div>
@@ -143,16 +186,15 @@
                     >
                     <div class="flex w-full">
                       <input
-                        v-model="avance[index]"
+                        v-model="volumen.current"
                         class="h-full w-full rounded-md border bg-white text-center text-lg font-semibold"
                         type="text"
-                        :id="`volumetriaActual[${index}]`"
                         readonly
                       />
                       <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
-                        {{ volumen.unidad }}
+                        {{ volumen.atajo }}
                       </div>
                     </div>
                   </div>
@@ -163,20 +205,21 @@
                     <label
                       class="flex w-full justify-start text-sm font-bold text-[#1A52B7]"
                       for="tiempoTotal"
-                      >{{ volumen.unidad }} total {{ key }}</label
+                    >
+                      Total {{ volumen.type }}</label
                     >
                     <div class="flex w-full">
-                      <input
-                        class="h-full w-full rounded-md border bg-white text-center text-lg font-semibold"
+                      <div
+                        class="flex h-10 w-full items-center justify-center rounded-md border border-[#7C8495] bg-white text-center text-lg font-semibold"
                         type="text"
                         id="tiempoTotal"
-                        :value="volumen.cantidad"
-                        readonly
-                      />
+                      >
+                        {{ volumen.total }}
+                      </div>
                       <div
                         class="ml-1 flex items-end justify-center text-lg font-bold"
                       >
-                        {{ volumen.unidad }}
+                        {{ volumen.atajo }}
                       </div>
                     </div>
                   </div>
@@ -187,16 +230,16 @@
                   <div class="mb-1 flex w-full justify-between">
                     <span class="text-sm">Progreso</span>
                     <span class="text-sm font-medium"
-                      >{{ porcentaje[index] }}%</span
+                      >{{ volumen.progress.toFixed(2) }}%</span
                     >
                   </div>
                   <div class="h-2.5 w-full rounded-full bg-[#E9F0FC]">
                     <div
                       :class="[
-                        colorFondoRentabilidadBruta(props.data.val().unidad),
+                        colorFondoRentabilidadBruta(data.business_unit),
                         'h-2.5 rounded-full transition-all duration-500',
                       ]"
-                      :style="`width: ${porcentaje[index]}%`"
+                      :style="`width: ${volumen.progress}%`"
                     ></div>
                   </div>
                 </div>
@@ -212,64 +255,82 @@
       </div>
     </div>
     <div
-      class="flex h-full flex-col items-center justify-center font-semibold w-[30%]"
+      class="flex h-full w-[30%] flex-col items-center justify-center font-semibold"
     >
       <div class="flex w-full items-center justify-center space-x-4">
         <div
           :class="[
-            colorFondoRentabilidadNeta(data.val().unidad),
+            colorFondoRentabilidadNeta(data.business_unit),
             'h-5 w-5 rounded-full',
           ]"
         ></div>
         <div class="text-lg font-semibold">Rentabilidad Actual</div>
       </div>
       <div
-        class="flex flex-col items-center justify-center space-y-3 rounded-lg bg-transparent p-4 w-[85%]"
+        class="flex w-[100%] flex-col items-center justify-center space-y-3 rounded-lg bg-transparent p-4"
       >
-        <div class="flex w-full rounded-xl bg-white shadow-md border">
+        <div class="flex w-full rounded-xl border bg-white shadow-md">
+          <div
+            class="flex w-full flex-col items-center justify-center space-y-2 py-5"
+          >
+            <div class="text-xl">Bruta</div>
             <div
-              class="flex w-full flex-col items-center justify-center space-y-2 py-5"
+              :class="[
+                colorTextoRentabilidadBruta(data.business_unit),
+                'flex w-[60%] items-center justify-between truncate text-4xl font-bold',
+              ]"
+              :title="
+                (data.rentabilidades.brutaFinal
+                  ? data.rentabilidades.brutaFinal
+                  : data.rentabilidades.brutaInicial
+                ).toFixed(2)
+              "
             >
-              <div class="text-xl">Bruta</div>
-              <div
-                :class="[
-                  colorTextoRentabilidadBruta(props.data.val().unidad),
-                  'truncate text-4xl font-bold flex justify-between items-center w-[60%]',
-                ]"
-                :title="rentabilidadBruta"
-              >
-                {{ (rentabilidadAvance.bruta
-                ? rentabilidadAvance.bruta
-                : props.data.val().rentabilidad.bruta) }} <span class="text-5xl">%</span>
-              </div>
+              {{
+                (data.rentabilidades.brutaFinal
+                  ? data.rentabilidades.brutaFinal
+                  : data.rentabilidades.brutaInicial
+                ).toFixed(2)
+              }}
+              <span class="text-5xl">%</span>
             </div>
           </div>
-        <div class="flex w-full rounded-xl bg-white shadow-md border">
+        </div>
+        <div class="flex w-full rounded-xl border bg-white shadow-md">
+          <div
+            class="flex w-full flex-col items-center justify-center space-y-2 py-5"
+          >
+            <div class="text-xl">Neta</div>
             <div
-              class="flex w-full flex-col items-center justify-center space-y-2 py-5"
+              :class="[
+                colorTextoRentabilidadNeta(data.business_unit),
+                'flex w-[60%] items-center justify-between truncate text-4xl font-bold',
+              ]"
+              :title="
+                (data.rentabilidades.netaFinal
+                  ? data.rentabilidades.netaFinal
+                  : data.rentabilidades.netaInicial
+                ).toFixed(2)
+              "
             >
-              <div class="text-xl">Neta</div>
-              <div
-                :class="[
-                  colorTextoRentabilidadNeta(props.data.val().unidad),
-                  'truncate text-4xl font-bold flex justify-between items-center w-[60%]',
-                ]"
-                :title="rentabilidadAvance.neta"
-              >
-                {{ (rentabilidadAvance.neta
-                ? rentabilidadAvance.neta
-                : props.data.val().rentabilidad.neta) }} <span class="text-5xl">%</span>
-              </div>
+              {{
+                (data.rentabilidades.netaFinal
+                  ? data.rentabilidades.netaFinal
+                  : data.rentabilidades.netaInicial
+                ).toFixed(2)
+              }}
+              <span class="text-5xl">%</span>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { ref, reactive } from "vue"
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue"
 import {
   getDatabase,
   ref as refDB,
@@ -277,31 +338,38 @@ import {
   child,
   get,
   update,
-} from "firebase/database";
-import { store } from "@/store";
+} from "firebase/database"
+// import { store } from "@/store";
 import {
   colorFondoRentabilidadBruta,
   colorFondoRentabilidadNeta,
   colorTextoRentabilidadBruta,
   colorTextoRentabilidadNeta,
-} from "@/utils/color.js";
-import { useRouter } from "vue-router";
+} from "@/utils/color.js"
+import { useRouter } from "vue-router"
+import { useProyectosEnProceso } from "@/stores/proyectosEnProceso"
+import { storeToRefs } from "pinia"
+import { CheckIcon, XIcon } from "@heroicons/vue/outline"
+import IconSpinner from "./icons/IconSpinner.vue"
 
-const props = defineProps(["data"]);
-const tiempoAvance = ref(0);
-const tiempoNuevoAvance = ref(0);
-const tiempoPorcentaje = ref(0);
-const database = getDatabase();
-const refAvance = refDB(database);
-const porcentaje = ref([]);
-const avance = ref([]);
-const nuevoAvance = ref([]);
-const sumaAvance = ref(0);
+const store = useProyectosEnProceso()
+const { data, avances, loadings } = storeToRefs(store)
+const { validateInput, saveNewTime, saveNewVolumetry } = store
+// const props = defineProps(["data"]);
+const tiempoAvance = ref(0)
+const tiempoNuevoAvance = ref(0)
+const tiempoPorcentaje = ref(0)
+const database = getDatabase()
+const refAvance = refDB(database)
+const porcentaje = ref([])
+const avance = ref([])
+const nuevoAvance = ref([])
+const sumaAvance = ref(0)
 const rentabilidadAvance = ref({
   bruta: null,
   neta: null,
-});
-const router = useRouter();
+})
+const router = useRouter()
 
 const rentabilidad = (ingreso) => {
   update(refDB(database, `avanceProyectos/${props.data.key}`), {
@@ -351,22 +419,21 @@ const rentabilidad = (ingreso) => {
         100
       ).toFixed(2),
     },
-  });
-};
+  })
+}
 
 const calcPoliza = (index) => {
-  console.log(props.data.val().ingresoTotal * (sumaAvance.value / 100));
+  console.log(props.data.val().ingresoTotal * (sumaAvance.value / 100))
   store.commit(
     "ingresoFinalSave",
     props.data.val().ingresoTotal * (sumaAvance.value / 100)
-  );
-  if(props.data.val().ingresoTotal * (sumaAvance.value / 100) != 0){
-  rentabilidad(props.data.val().ingresoTotal * (sumaAvance.value / 100));
+  )
+  if (props.data.val().ingresoTotal * (sumaAvance.value / 100) != 0) {
+    rentabilidad(props.data.val().ingresoTotal * (sumaAvance.value / 100))
+  } else {
+    rentabilidad(props.data.val().ingresoTotal)
   }
-  else{
-    rentabilidad(props.data.val().ingresoTotal);
-  }
-};
+}
 
 const guardar = (index) => {
   get(child(refAvance, `avanceProyectos/${props.data.key}`)).then(
@@ -381,8 +448,8 @@ const guardar = (index) => {
           sumaAvance.value =
             snapshot.val().volumetrias[
               Object.keys(props.data.val().volumetrias)[index]
-            ].avance + nuevoAvance.value[index];
-        } else sumaAvance.value = nuevoAvance.value[index];
+            ].avance + nuevoAvance.value[index]
+        } else sumaAvance.value = nuevoAvance.value[index]
         update(
           refDB(
             database,
@@ -398,16 +465,16 @@ const guardar = (index) => {
             (sumaAvance.value /
               Object.values(props.data.val().volumetrias)[index].cantidad) *
             100
-          ).toFixed(2);
-          avance.value[index] = sumaAvance.value;
-          nuevoAvance.value[index] = 0;
-        });
+          ).toFixed(2)
+          avance.value[index] = sumaAvance.value
+          nuevoAvance.value[index] = 0
+        })
         // Actualizar el tiempo
       } else {
         if (snapshot.hasChild("tiempo")) {
-          sumaAvance.value = tiempoNuevoAvance.value + snapshot.val().tiempo;
+          sumaAvance.value = tiempoNuevoAvance.value + snapshot.val().tiempo
         } else {
-          sumaAvance.value = tiempoNuevoAvance.value;
+          sumaAvance.value = tiempoNuevoAvance.value
         }
         update(refDB(database, `avanceProyectos/${props.data.key}`), {
           tiempo: sumaAvance.value,
@@ -415,67 +482,69 @@ const guardar = (index) => {
           tiempoPorcentaje.value = (
             (sumaAvance.value / props.data.val().tiempo) *
             100
-          ).toFixed(2);
-          tiempoAvance.value = sumaAvance.value;
-          tiempoNuevoAvance.value = 0;
-        });
+          ).toFixed(2)
+          tiempoAvance.value = sumaAvance.value
+          tiempoNuevoAvance.value = 0
+        })
       }
       if (
-        props.data.val().unidad == "Poliza" &&
+        data.business_unit == "Poliza" &&
         Object.keys(props.data.val().volumetrias)[index] === "Poliza"
       ) {
-        
-        calcPoliza(index);
+        calcPoliza(index)
         update(refDB(database, `avanceProyectos/${props.data.key}`), {
           ingresoFinal:
-            store.state.b.ingresoFinal == 0 || store.state.b.ingresoFinal === '$0.00' ? null : store.state.b.ingresoFinal,
-        });
-        router.go(0);
+            store.state.b.ingresoFinal == 0 ||
+            store.state.b.ingresoFinal === "$0.00"
+              ? null
+              : store.state.b.ingresoFinal,
+        })
+        router.go(0)
       }
     }
-  );
-};
+  )
+}
 
-if (props.data.val().volumetrias)
-  for (const element in props.data.val().volumetrias) {
-    nuevoAvance.value.push(0);
-  }
+// if (props.data.val().volumetrias)
+//   for (const element in props.data.val().volumetrias) {
+//     nuevoAvance.value.push(0);
+//   }
 
-await get(child(refAvance, `avanceProyectos/${props.data.key}`)).then(
-  (snapshot) => {
-    if (snapshot.exists()) {
-      var i = 0;
-      if (snapshot.hasChild("volumetrias")) {
-        Object.values(snapshot.val().volumetrias).forEach((element) => {
-          avance.value.push(element.avance);
-          porcentaje.value[i] = (
-            (element.avance /
-              Object.values(props.data.val().volumetrias)[i].cantidad) *
-            100
-          ).toFixed(2);
-          i++;
-        });
-      }
-      if (snapshot.hasChild("tiempo")) {
-        tiempoAvance.value = snapshot.val().tiempo;
-        tiempoPorcentaje.value = (
-          (snapshot.val().tiempo / props.data.val().tiempo) *
-          100
-        ).toFixed(2);
-      }
-    } else {
-      for (const element in props.data.val().volumetrias) {
-        avance.value.push(0);
-        porcentaje.value.push(0);
-      }
-    }
-    if (snapshot.hasChild("rentabilidad")) {
-      rentabilidadAvance.value.bruta = snapshot.val().rentabilidad.bruta;
-      rentabilidadAvance.value.neta = snapshot.val().rentabilidad.neta;
-    }
-    if (snapshot.hasChild("ingresoFinal")) {
-      store.commit("ingresoFinalSave", snapshot.val().ingresoFinal);
-    } else store.commit("ingresoFinalSave", 0.0);
-  }
-);
+// await get(child(refAvance, `avanceProyectos/${props.data.key}`)).then(
+//   (snapshot) => {
+//     if (snapshot.exists()) {
+//       var i = 0;
+//       if (snapshot.hasChild("volumetrias")) {
+//         Object.values(snapshot.val().volumetrias).forEach((element) => {
+//           avance.value.push(element.avance);
+//           porcentaje.value[i] = (
+//             (element.avance /
+//               Object.values(props.data.val().volumetrias)[i].cantidad) *
+//             100
+//           ).toFixed(2);
+//           i++;
+//         });
+//       }
+//       if (snapshot.hasChild("tiempo")) {
+//         tiempoAvance.value = snapshot.val().tiempo;
+//         tiempoPorcentaje.value = (
+//           (snapshot.val().tiempo / props.data.val().tiempo) *
+//           100
+//         ).toFixed(2);
+//       }
+//     } else {
+//       for (const element in props.data.val().volumetrias) {
+//         avance.value.push(0);
+//         porcentaje.value.push(0);
+//       }
+//     }
+//     if (snapshot.hasChild("rentabilidad")) {
+//       rentabilidadAvance.value.bruta = snapshot.val().rentabilidad.bruta;
+//       rentabilidadAvance.value.neta = snapshot.val().rentabilidad.neta;
+//     }
+//     if (snapshot.hasChild("ingresoFinal")) {
+//       store.commit("ingresoFinalSave", snapshot.val().ingresoFinal);
+//     } else store.commit("ingresoFinalSave", 0.0);
+//   }
+// );
 </script>

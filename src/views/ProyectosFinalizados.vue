@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-full flex-col space-y-12 px-6 py-6">
+  <div class="flex h-full w-full flex-col space-y-12 px-6 py-6" v-if="data">
     <div class="flex h-auto w-full justify-evenly">
       <div class="flex h-full w-[25%] items-center justify-center">
         <div :class="[colorDegradado(), 'h-32 w-32 rounded-full p-1']">
@@ -11,7 +11,7 @@
           >
             <div class="text-xs text-white">Unidad</div>
             <div class="text-sm font-semibold text-white">
-              {{ data.unidad }}
+              {{ data.business_unit }}
             </div>
           </div>
         </div>
@@ -24,12 +24,12 @@
           </div>
           <div class="flex justify-between">
             <div class="text-[#7C8495]">Fecha de inicio:</div>
-            <div class="font-semibold">{{ creado }}</div>
+            <div class="font-semibold">{{ data.created_format }}</div>
           </div>
           <div class="flex justify-between">
             <div class="text-[#7C8495]">Estado:</div>
             <div class="font-semibold text-[#2166E5]">
-              {{ data.estado }}
+              {{ data.status }}
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
             <div>
               <div class="flex flex-col rounded-lg py-2 px-4 shadow-md">
                 <div class="text-sm">{{ iFinal ? "Inicial" : "Final" }}</div>
-                <div class="font-semibold text-[#2166E5]">{{ iTotal }}</div>
+                <div class="font-semibold text-[#2166E5]">${{ (data.amountTotal).toLocaleString("en-US") }}</div>
               </div>
             </div>
             <div v-if="iFinal">
@@ -56,7 +56,7 @@
         </div>
         <!-- Rentabilidades -->
         <div class="flex h-full flex-col space-y-4">
-          <div>Rentabilidad inicial</div>
+          <div>Rentabilidad inicial</div> 
           <div class="flex w-full justify-center space-x-3.5">
             <div
               :class="[
@@ -69,7 +69,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Bruta</div>
               <div class="text-base font-semibold">
-                {{ data.rentabilidad.bruta }}%
+                {{ data.rentabilidades.brutaInicial.toFixed(2) }}%
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
             <div class="flex flex-col">
               <div class="flex justify-start text-xs text-[#7C8495]">Neta</div>
               <div class="text-base font-semibold">
-                {{ data.rentabilidad.neta }}%
+                {{ data.rentabilidades.netaInicial.toFixed(2) }}%
               </div>
             </div>
           </div>
@@ -142,11 +142,16 @@ import ProyectosFinalizadosResumen from "@/components/ProyectosFinalizadosResume
 import ProyectosFinalizadosDetalle from "@/components/ProyectosFinalizadosDetalle.vue";
 import ModalReabrirProyecto from "@/components/ModalReabrirProyecto.vue";
 import { useRoute } from "vue-router";
+import { useProyectosFinalizados } from "@/stores/proyectosFinalizados"
+import { storeToRefs } from "pinia"
 
+const store = useProyectosFinalizados()
+const { data } = storeToRefs(store)
+const { fetchData } = store 
 const database = getDatabase();
 const route = useRoute();
 const detalle = ref(false);
-const data = ref({ nombre: "", rentabilidad: { bruta: 0, neta: 0 } });
+// const data = ref({ nombre: "", rentabilidad: { bruta: 0, neta: 0 } });
 const dataFinal = ref({ rentabilidad: { bruta: 0, neta: 0 } });
 const rentabilidadFinal = ref({
   bruta: Number,
@@ -174,11 +179,13 @@ const colorEfectividad = ref({
 });
 const colorDegradadoDetalle = ref();
 
+fetchData(route.params.key)
+
 const colorFondo = () => {
   let color;
   let efectividadTexto;
   let efectividadFondo;
-  switch (data.value.unidad) {
+  switch (data.value.business_unit) {
     case "Poliza":
       color = "bg-poliza";
       efectividadFondo = "bg-poliza";
@@ -208,7 +215,7 @@ const colorFondo = () => {
 const colorFondoRentabilidadBruta = () => {
   let color;
   let grafico;
-  switch (data.value.unidad) {
+  switch (data.value.business_unit) {
     case "Poliza":
       color = "bg-poliza-3";
       grafico = "text-poliza-3";
@@ -235,7 +242,7 @@ const colorFondoRentabilidadNeta = () => {
   let color;
   let grafico;
   let fondo;
-  switch (data.value.unidad) {
+  switch (data.value.business_unit) {
     case "Poliza":
       color = "bg-poliza-2";
       grafico = "text-poliza-2";
@@ -266,7 +273,7 @@ const colorFondoRentabilidadNeta = () => {
 const colorDegradado = () => {
   let colorDegradado;
   let colorDegradadoDetalleFunc;
-  switch (data.value.unidad) {
+  switch (data.value.business_unit) {
     case "Poliza":
       colorDegradado = "bg-gradient-to-tr from-poliza via-poliza-2 to-poliza-3";
       colorDegradadoDetalleFunc = "bg-gradient-to-tr from-poliza to-poliza-3";
@@ -292,52 +299,52 @@ const colorDegradado = () => {
   return colorDegradado;
 };
 
-onMounted(() => {
-  get(refDB(database, `proyectos/${route.params.key}`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        const date = new Date(snapshot.val().creado);
-        data.value = snapshot.val();
-        iTotal.value = snapshot.val().ingresoTotal.toLocaleString("en", {
-          style: "currency",
-          currency: "MXN",
-        });
-        creado.value =
-          date.getDate() +
-          "/" +
-          String(date.getMonth() + 1).padStart(2, "0") +
-          "/" +
-          date.getFullYear();
-      }
-    })
-    .then(() => {
-      get(refDB(database, `avanceProyectos/${route.params.key}`)).then(
-        (snapshot) => {
-          if (snapshot.exists()) {
-            dataFinal.value = snapshot.val();
-            if (snapshot.hasChild("rentabilidad")) {
-              if (snapshot.hasChild("rentabilidad/bruta")) {
-                rentabilidadFinal.value.bruta =
-                  snapshot.val().rentabilidad.bruta;
-                efectividad.value.bruta =
-                  (rentabilidadFinal.value.bruta * 100) /
-                  data.value.rentabilidad.bruta;
-              }
-              if (snapshot.hasChild("rentabilidad/neta")) {
-                rentabilidadFinal.value.neta = snapshot.val().rentabilidad.neta;
-                efectividad.value.neta =
-                  (rentabilidadFinal.value.neta * 100) /
-                  data.value.rentabilidad.neta;
-              }
-            } else {
-              efectividad.value.bruta = 100;
-              efectividad.value.neta = 100;
-            }
-            if (snapshot.hasChild("ingresoFinal"))
-              iFinal.value = snapshot.val().ingresoFinal;
-          }
-        }
-      );
-    });
-});
+// onMounted(() => {
+//   get(refDB(database, `proyectos/${route.params.key}`))
+//     .then((snapshot) => {
+//       if (snapshot.exists()) {
+//         const date = new Date(snapshot.val().creado);
+//         data.value = snapshot.val();
+//         iTotal.value = snapshot.val().ingresoTotal.toLocaleString("en", {
+//           style: "currency",
+//           currency: "MXN",
+//         });
+//         creado.value =
+//           date.getDate() +
+//           "/" +
+//           String(date.getMonth() + 1).padStart(2, "0") +
+//           "/" +
+//           date.getFullYear();
+//       }
+//     })
+//     .then(() => {
+//       get(refDB(database, `avanceProyectos/${route.params.key}`)).then(
+//         (snapshot) => {
+//           if (snapshot.exists()) {
+//             dataFinal.value = snapshot.val();
+//             if (snapshot.hasChild("rentabilidad")) {
+//               if (snapshot.hasChild("rentabilidad/bruta")) {
+//                 rentabilidadFinal.value.bruta =
+//                   snapshot.val().rentabilidad.bruta;
+//                 efectividad.value.bruta =
+//                   (rentabilidadFinal.value.bruta * 100) /
+//                   data.value.rentabilidad.bruta;
+//               }
+//               if (snapshot.hasChild("rentabilidad/neta")) {
+//                 rentabilidadFinal.value.neta = snapshot.val().rentabilidad.neta;
+//                 efectividad.value.neta =
+//                   (rentabilidadFinal.value.neta * 100) /
+//                   data.value.rentabilidad.neta;
+//               }
+//             } else {
+//               efectividad.value.bruta = 100;
+//               efectividad.value.neta = 100;
+//             }
+//             if (snapshot.hasChild("ingresoFinal"))
+//               iFinal.value = snapshot.val().ingresoFinal;
+//           }
+//         }
+//       );
+//     });
+// });
 </script>

@@ -1,9 +1,5 @@
 <template>
-  <TransitionRoot
-    appear
-    :show="$store.state.b.isOpenModalEditarCostosGastos"
-    as="template"
-  >
+  <TransitionRoot appear :show="editarCostoGasto" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-50">
       <TransitionChild
         as="template"
@@ -30,37 +26,27 @@
             leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-              class="
-                w-full
-                max-w-lg
-                transform
-                rounded-2xl
-                bg-white
-                p-6
-                text-left
-                align-middle
-                shadow-xl
-                transition-all
-              "
+              class="w-full max-w-lg transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
               <DialogTitle
                 as="h3"
                 class="flex text-lg font-medium leading-6 text-gray-900"
               >
-                <div class="w-[95%] font-semibold text-2xl">
-                  {{ props.data.val().nombre }}
+                <div class="w-[95%] text-2xl font-semibold">
+                  <!-- {{ props.data.val().nombre }} -->
+                  Editar Costos y Gastos
                 </div>
                 <div class="w-[5%]">
-                  <div class="w-5 h-5 bg-fondo-gris rounded-full"></div>
+                  <div class="h-5 w-5 rounded-full bg-fondo-gris"></div>
                 </div>
               </DialogTitle>
               <div class="mt-2">
-                <div class="flex flex-col bg-white w-full h-full">
+                <div class="flex h-full w-full flex-col bg-white">
                   <TabGroup>
                     <TabList class="border-b-2">
                       <Tab v-slot="{ selected }" as="template"
                         ><button
-                          class="px-7 text-gray-400 py-2 bg-white border-b-2"
+                          class="border-b-2 bg-white px-7 py-2 text-gray-400"
                           :class="[
                             selected
                               ? 'border-black font-semibold'
@@ -72,7 +58,7 @@
                       >
                       <Tab v-slot="{ selected }" as="template"
                         ><button
-                          class="px-7 text-gray-400 py-2 bg-white border-b-2"
+                          class="border-b-2 bg-white px-7 py-2 text-gray-400"
                           :class="[
                             selected
                               ? 'border-black font-semibold'
@@ -84,7 +70,7 @@
                       >
                       <Tab v-slot="{ selected }" as="template"
                         ><button
-                          class="px-7 text-gray-400 py-2 bg-white border-b-2"
+                          class="border-b-2 bg-white px-7 py-2 text-gray-400"
                           :class="[
                             selected
                               ? 'border-black font-semibold'
@@ -98,40 +84,30 @@
                     <TabPanels>
                       <!-- Costo interno -->
                       <TabPanel>
-                        <div class="flex flex-col w-full space-y-6 mt-4">
-                          <div class="flex flex-col w-full">
+                        <div class="mt-4 flex w-full flex-col space-y-6">
+                          <div class="flex w-full flex-col">
                             <label
-                              class="text-sm font-semibold mb-1"
+                              class="mb-1 text-sm font-semibold"
                               for="costoInternoMaterial"
                               >Material</label
                             >
                             <input
-                              v-model="costoInterno.material"
-                              class="
-                                w-full
-                                rounded-md
-                                bg-fondo-gris-claro
-                                border-none
-                              "
+                              v-model="values.costoInterno.material"
+                              class="w-full rounded-md border-none bg-fondo-gris-claro"
                               type="number"
                               id="costoInternoMaterial"
                               min="0"
                             />
                           </div>
-                          <div class="flex flex-col w-full">
+                          <div class="flex w-full flex-col">
                             <label
-                              class="text-sm font-semibold mb-1"
+                              class="mb-1 text-sm font-semibold"
                               for="costoInternoManoObra"
                               >Mano de obra</label
                             >
                             <input
-                              v-model="costoInterno.manoObra"
-                              class="
-                                w-full
-                                rounded-md
-                                bg-fondo-gris-claro
-                                border-none
-                              "
+                              v-model="values.costoInterno.manoDeObra"
+                              class="w-full rounded-md border-none bg-fondo-gris-claro"
                               type="number"
                               id="costoInternoManoObra"
                               min="0"
@@ -142,40 +118,30 @@
                       <!-- Fin costo interno -->
                       <!-- Costo externo -->
                       <TabPanel
-                        ><div class="flex flex-col w-full space-y-6 mt-4">
-                          <div class="flex flex-col w-full">
+                        ><div class="mt-4 flex w-full flex-col space-y-6">
+                          <div class="flex w-full flex-col">
                             <label
-                              class="text-sm font-semibold mb-1"
+                              class="mb-1 text-sm font-semibold"
                               for="costoExternoMaterial"
                               >Material</label
                             >
                             <input
-                              v-model="costoExterno.material"
-                              class="
-                                w-full
-                                rounded-md
-                                bg-fondo-gris-claro
-                                border-none
-                              "
+                              v-model="values.costoExterno.material"
+                              class="w-full rounded-md border-none bg-fondo-gris-claro"
                               type="number"
                               id="costoExternoMaterial"
                               min="0"
                             />
                           </div>
-                          <div class="flex flex-col w-full">
+                          <div class="flex w-full flex-col">
                             <label
-                              class="text-sm font-semibold mb-1"
+                              class="mb-1 text-sm font-semibold"
                               for="costoExternoManoObra"
                               >Mano de obra</label
                             >
                             <input
-                              v-model="costoExterno.manoObra"
-                              class="
-                                w-full
-                                rounded-md
-                                bg-fondo-gris-claro
-                                border-none
-                              "
+                              v-model="values.costoExterno.manoDeObra"
+                              class="w-full rounded-md border-none bg-fondo-gris-claro"
                               type="number"
                               id="costoExternoManoObra"
                               min="0"
@@ -187,78 +153,58 @@
                       <!-- gastos -->
                       <TabPanel>
                         <div class="mt-4">
-                          <div class="flex flex-col w-full space-y-6 mt-4">
-                            <div class="flex flex-col w-full">
+                          <div class="mt-4 flex w-full flex-col space-y-6">
+                            <div class="flex w-full flex-col">
                               <label
-                                class="text-sm font-semibold mb-1"
+                                class="mb-1 text-sm font-semibold"
                                 for="gastoFijo"
                                 >Fijo</label
                               >
                               <input
-                                v-model="gastos.fijo"
-                                class="
-                                  w-full
-                                  rounded-md
-                                  bg-fondo-gris-claro
-                                  border-none
-                                "
+                                v-model="values.gastosAdministrativos.fijo"
+                                class="w-full rounded-md border-none bg-fondo-gris-claro"
                                 type="number"
                                 id="gastoFijo"
                                 min="0"
                               />
                             </div>
-                            <div class="flex flex-col w-full">
+                            <div class="flex w-full flex-col">
                               <label
-                                class="text-sm font-semibold mb-1"
+                                class="mb-1 text-sm font-semibold"
                                 for="gastoNomina"
                                 >Nómina</label
                               >
                               <input
-                                v-model="gastos.nomina"
-                                class="
-                                  w-full
-                                  rounded-md
-                                  bg-fondo-gris-claro
-                                  border-none
-                                "
+                                v-model="values.gastosAdministrativos.nomina"
+                                class="w-full rounded-md border-none bg-fondo-gris-claro"
                                 type="number"
                                 id="gastoNomina"
                                 min="0"
                               />
                             </div>
-                            <div class="flex flex-col w-full">
+                            <div class="flex w-full flex-col">
                               <label
-                                class="text-sm font-semibold mb-1"
+                                class="mb-1 text-sm font-semibold"
                                 for="gastoVariable"
                                 >Variable</label
                               >
                               <input
-                                v-model="gastos.variable"
-                                class="
-                                  w-full
-                                  rounded-md
-                                  bg-fondo-gris-claro
-                                  border-none
-                                "
+                                v-model="values.gastosAdministrativos.variable"
+                                class="w-full rounded-md border-none bg-fondo-gris-claro"
                                 type="number"
                                 id="gastoVariable"
                                 min="0"
                               />
                             </div>
-                            <div class="flex flex-col w-full">
+                            <div class="flex w-full flex-col">
                               <label
-                                class="text-sm font-semibold mb-1"
+                                class="mb-1 text-sm font-semibold"
                                 for="gastoOtros"
                                 >Otros</label
                               >
                               <input
-                                v-model="gastos.otros"
-                                class="
-                                  w-full
-                                  rounded-md
-                                  bg-fondo-gris-claro
-                                  border-none
-                                "
+                                v-model="values.gastosAdministrativos.otros"
+                                class="w-full rounded-md border-none bg-fondo-gris-claro"
                                 type="number"
                                 id="gastoOtros"
                                 min="0"
@@ -270,58 +216,19 @@
                     </TabPanels>
                   </TabGroup>
                   <div
-                    class="
-                      flex
-                      w-full
-                      justify-center
-                      items-center
-                      space-x-8
-                      mt-8
-                    "
+                    class="mt-8 flex w-full items-center justify-center space-x-8"
                   >
                     <button
                       type="button"
-                      class="
-                        inline-flex
-                        justify-center
-                        rounded-md
-                        border border-transparent
-                        bg-blue-100
-                        px-4
-                        py-2
-                        text-sm
-                        font-medium
-                        text-blue-900
-                        hover:bg-blue-200
-                        focus:outline-none
-                        focus-visible:ring-2
-                        focus-visible:ring-blue-500
-                        focus-visible:ring-offset-2
-                      "
-                      @click="$store.commit('closeModalEditarCostosGastos')"
+                      class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      @click="closeModal"
                     >
                       Cancelar
                     </button>
                     <button
                       type="button"
                       @click="guardar"
-                      class="
-                        inline-flex
-                        justify-center
-                        rounded-md
-                        border border-transparent
-                        bg-blue-100
-                        px-4
-                        py-2
-                        text-sm
-                        font-medium
-                        text-blue-900
-                        hover:bg-blue-200
-                        focus:outline-none
-                        focus-visible:ring-2
-                        focus-visible:ring-blue-500
-                        focus-visible:ring-offset-2
-                      "
+                      class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     >
                       Guardar
                     </button>
@@ -337,159 +244,138 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import ModalNuevoProyectoVolumen from "./ModalNuevoProyectoVolumen.vue";
-import { getDatabase, ref as refDB, update } from "firebase/database";
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
+import { onMounted, computed, reactive } from "vue"
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue"
+import { getFirestore, doc, updateDoc } from "firebase/firestore"
 import {
   TransitionRoot,
   TransitionChild,
   Dialog,
   DialogPanel,
   DialogTitle,
-} from "@headlessui/vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+} from "@headlessui/vue"
+import { useStore } from "vuex"
+import { useRouter } from "vue-router"
+import { useProyectosEnProceso } from "@/stores/proyectosEnProceso"
+import { storeToRefs } from "pinia"
 
-const props = defineProps(["data"]);
-const database = getDatabase();
-const store = useStore();
-const router = useRouter();
-const costoInterno = ref({
-  material: 0,
-  manoObra: 0,
-});
-const costoExterno = ref({
-  material: 0,
-  manoObra: 0,
-});
-const gastos = ref({
-  fijo: 0,
-  nomina: 0,
-  variable: 0,
-  otros: 0,
-});
+const props = defineProps(["data"])
+const db = getFirestore()
+const store = useProyectosEnProceso()
+const { editarCostoGasto, data } = storeToRefs(store)
+const { fetchData } = store
+// const store = useStore();
+const router = useRouter()
+const values = reactive({
+  costoInterno: {
+    material: 0,
+    manoDeObra: 0,
+    total: computed(
+      () => values.costoInterno.material + values.costoInterno.manoDeObra
+    ),
+  },
+  costoExterno: {
+    material: 0,
+    manoDeObra: 0,
+    total: computed(
+      () => values.costoExterno.material + values.costoExterno.manoDeObra
+    ),
+  },
+  gastosAdministrativos: {
+    fijo: 0,
+    nomina: 0,
+    variable: 0,
+    otros: 0,
+    total: computed(
+      () =>
+        values.gastosAdministrativos.fijo +
+        values.gastosAdministrativos.nomina +
+        values.gastosAdministrativos.variable +
+        values.gastosAdministrativos.otros
+    ),
+  },
+  totalNetoFinal: computed(
+    () =>
+      data.value.amountTotal -
+      (values.gastosAdministrativos.fijo +
+        values.gastosAdministrativos.nomina +
+        values.gastosAdministrativos.variable +
+        values.gastosAdministrativos.otros +
+        values.costoExterno.material +
+        values.costoExterno.manoDeObra +
+        values.costoInterno.material +
+        values.costoInterno.manoDeObra)
+  ),
+  totalBrutoFinal: computed(
+    () =>
+      data.value.amountTotal -
+      (values.costoInterno.material +
+        values.costoInterno.manoDeObra +
+        values.costoExterno.material +
+        values.costoExterno.manoDeObra)
+  ),
+  totalNeto: data.value.costos.totalNeto,
+  totalBruto: data.value.costos.totalBruto,
+})
 
-const guardar = () => {
-  update(refDB(database, `proyectos/${props.data.key}`), {
-    costoExterno: {
-      manoDeObra: costoExterno.value.manoObra
-        ? costoExterno.value.manoObra
-        : null,
-      material: costoExterno.value.material
-        ? costoExterno.value.material
-        : null,
-      total:
-        costoExterno.value.manoObra || costoExterno.value.material
-          ? (
-              costoExterno.value.manoObra + costoExterno.value.material
-            ).toLocaleString("en")
-          : null,
-    },
-    costoInterno: {
-      manoDeObra: costoInterno.value.manoObra
-        ? costoInterno.value.manoObra
-        : null,
-      material: costoInterno.value.material
-        ? costoInterno.value.material
-        : null,
-      total:
-        costoInterno.manoDeObra || costoInterno.value.material
-          ? (
-              costoInterno.value.manoObra + costoInterno.value.material
-            ).toLocaleString("en")
-          : null,
-    },
-    gastos: {
-      fijo: gastos.value.fijo ? gastos.value.fijo : null,
-      nomina: gastos.value.nomina ? gastos.value.nomina : null,
-      variable: gastos.value.variable ? gastos.value.variable : null,
-      otros: gastos.value.otros ? gastos.value.otros : null,
-      total:
-        gastos.value.fijo ||
-        gastos.value.nomina ||
-        gastos.value.otros ||
-        gastos.value.variable
-          ? (
-              gastos.value.fijo +
-              gastos.value.nomina +
-              gastos.value.variable +
-              gastos.value.otros
-            ).toLocaleString("en")
-          : null,
-    },
-  }).then(() => {
-    update(refDB(database, `avanceProyectos/${props.data.key}`), {
-      rentabilidad: {
-        bruta: (
-          (1 -
-            (costoExterno.value.manoObra +
-              costoExterno.value.material +
-              (costoInterno.value.manoObra + costoInterno.value.material)) /
-              props.data.val().ingresoTotal) *
-          100
-        ).toFixed(2),
-        neta: (
-          (1 -
-            (costoExterno.value.manoObra +
-              costoExterno.value.material +
-              (costoInterno.value.manoObra + costoInterno.value.material) +
-              (gastos.value.fijo +
-                gastos.value.nomina +
-                gastos.value.otros +
-                gastos.value.variable)) /
-              props.data.val().ingresoTotal) *
-          100
-        ).toFixed(2),
-      },
-    });
-    router.go(0);
-  });
-};
+const rentabilidad = reactive({
+    brutaFinal: computed(
+      () => (values.totalBrutoFinal / data.value.amountTotal) * 100
+    ),
+    netaFinal: computed(
+      () => (values.totalNetoFinal / data.value.amountTotal) * 100
+    ),
+    brutaInicial: data.value.rentabilidades.brutaInicial,
+    netaInicial: data.value.rentabilidades.netaInicial,
+  })
 
 onMounted(() => {
-  // Costo interno
-  if (props.data.val().costoInterno) {
-    Object.keys(props.data.val().costoInterno).forEach((element, index) => {
-      if (element == "manoDeObra")
-        costoInterno.value.manoObra = Object.values(
-          props.data.val().costoInterno
-        )[index];
-      if (element == "material")
-        costoInterno.value.material = Object.values(
-          props.data.val().costoInterno
-        )[index];
-    });
-  }
-  //   Costo externo
-  if (props.data.val().costoExterno) {
-    Object.keys(props.data.val().costoExterno).forEach((element, index) => {
-      if (element == "manoDeObra")
-        costoExterno.value.manoObra = Object.values(
-          props.data.val().costoExterno
-        )[index];
-      if (element == "material")
-        costoExterno.value.material = Object.values(
-          props.data.val().costoExterno
-        )[index];
-    });
-  }
-  //   gastos
-  if (props.data.val().gastos) {
-    Object.keys(props.data.val().gastos).forEach((element, index) => {
-      if (element == "fijo")
-        gastos.value.fijo = Object.values(props.data.val().gastos)[index];
-      if (element == "nomina")
-        gastos.value.nomina = Object.values(props.data.val().gastos)[index];
-      if (element == "variable")
-        gastos.value.variable = Object.values(props.data.val().gastos)[index];
-      if (element == "otros")
-        gastos.value.otros = Object.values(props.data.val().gastos)[index];
-    });
-  }
-});
+  Object.assign(values, {
+    costoInterno: {
+      material: data.value.costos.costoInterno.material,
+      manoDeObra: data.value.costos.costoInterno.manoDeObra,
+      total: computed(
+        () => values.costoInterno.material + values.costoInterno.manoDeObra
+      ),
+    },
+    costoExterno: {
+      material: data.value.costos.costoExterno.material,
+      manoDeObra: data.value.costos.costoExterno.manoDeObra,
+      total: computed(
+        () => values.costoExterno.material + values.costoExterno.manoDeObra
+      ),
+    },
+    gastosAdministrativos: {
+      fijo: data.value.costos.gastosAdministrativos.fijo,
+      nomina: data.value.costos.gastosAdministrativos.nomina,
+      variable: data.value.costos.gastosAdministrativos.variable,
+      otros: data.value.costos.gastosAdministrativos.otros,
+      total: computed(
+        () =>
+          values.gastosAdministrativos.fijo +
+          values.gastosAdministrativos.nomina +
+          values.gastosAdministrativos.variable +
+          values.gastosAdministrativos.otros
+      ),
+    },
+  })
+})
+
+const guardar = async () => {
+  const docRef = doc(db, "proyectos", data.value.key)
+  await updateDoc(docRef, {
+    rentabilidades: {
+      ...rentabilidad
+    }, 
+    costos: {
+      ...values
+    }
+  }, )
+  fetchData(data.value.key)
+   closeModal()
+}
 
 const closeModal = () => {
-  store.commit("closeModalEditarCostosGastos");
-};
+  editarCostoGasto.value = false
+}
 </script>
